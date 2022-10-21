@@ -13,6 +13,21 @@ import Qt.labs.location 1.0
         height: 480
         visible: true
 
+        //general magic token
+      /*  Component.onCompleted: {
+            //! [Set token safely]
+            ServicesManager.settings.token = __my_secret_token;
+            //! [Set token safely]
+            ServicesManager.settings.allowInternetConnection = true; // enable connection to online services
+
+            var updater = ServicesManager.contentUpdater(ContentItem.Type.RoadMap);
+            updater.autoApplyWhenReady = true;
+            updater.update();
+        }
+        */
+
+
+
         //open street map source
         Plugin {
             id: mapPlugin
@@ -26,14 +41,8 @@ import Qt.labs.location 1.0
                         name: "osm.mapping.providersrepository.address"
                         value: "http://maps-redirect.qt.io/osm/5.6/"
                     }
-             PluginParameter { name: "osm.useragent"; value: "My great Qt OSM application" }
-                PluginParameter { name: "osm.mapping.host"; value: "http://osm.tile.server.address/" }
-                PluginParameter { name: "osm.mapping.copyright"; value: "All mine" }
-                PluginParameter { name: "osm.routing.host"; value: "http://osrm.server.address/viaroute" }
-                PluginParameter { name: "osm.geocoding.host"; value: "http://geocoding.server.address" }
+             }
 
-
-        }
             //map display
             Map {
                 anchors.fill: parent
@@ -42,18 +51,26 @@ import Qt.labs.location 1.0
                 zoomLevel: 14
                 copyrightsVisible: false
 
+
                 //route display
                 MapPolyline {
+                        id: mapPolyline
                         line.width: 8
                         line.color: 'red'
 
                         path: [
                             { latitude: 47.80, longitude: 13.12 },
                             { latitude: 47.81, longitude: 13.12 },
-                            { latitude: 47.82, longitude: 13.12 },
-                            { latitude: 47.83, longitude: 13.12 }
+                           /* { latitude: 47.82, longitude: 13.12 },
+                            { latitude: 47.83, longitude: 13.12 } */
                         ]
                     }
+                //redundant
+                Route{
+                    id: myroute
+                    path: mapPolyline.path
+
+                }
 
 
             //clocktime
@@ -64,68 +81,25 @@ import Qt.labs.location 1.0
                 text: Qt.formatTime(new Date(),"hh:mm")
             }
 
-            //navigator start
+            //1 min
+            Timer {
+                id: timer
+                interval: 1000      //ms
+                repeat: true
+                running: true
+                //property int lastcoordinate =
 
-            RouteModel{
-                id: rm
-                plugin: mapPlugin
-                query: RouteQuery{
-                       id: routeQuery
+                onTriggered:
+                {
+                    timeText.text =  Qt.formatTime(new Date(),"hh:mm")
+                    //mapPolyline.addCoordinate(QtPositioning.coordinate(47.84, 13.12))
+                    myGlobalObject.test("TEXT")  // NOTE: myGlobalObject is available here because it is set as a context property in main.cpp
                 }
             }
+        }
 
-            Navigator{
-                automaticReroutingEnabled: false
-                plugin: mapPlugin
-               /* route:
-                    Route {
-                    id: route
-                   /* path: {[
-                        { latitude: 47.80, longitude: 13.12 },
-                        { latitude: 47.81, longitude: 13.12 },
-                        { latitude: 47.82, longitude: 13.12 },
-                        { latitude: 47.83, longitude: 13.12 }
-                    ]}*
-                }
-*/
-                trackPositionSource: false
-            }
+        function gps(){
 
-            Button {
-                text: "Start simulation"
-                onClicked: Navigator.active
-            }
+         }
+    }
 
-
-           /*NavigationService {
-                id: navigation
-                simulation: true // change it to false (default) to perform real turn by turn navigation
-                onActiveChanged: {
-                    if (active) {
-                        mapView.startFollowingPosition();
-                        mapView.routeCollection.clear(true /*keepMainRoute*);
-                    }
-                }
-            }
-
-            MapView {
-                id: mapView
-                anchors.fill: parent
-                viewAngle: 25
-                cursorVisibility: true
-                enableCursor: true
-
-                onRouteSelected: {
-                    routeCollection.mainRoute = MapPolyline.path;
-                    centerOnRoute(MapPolyline.path);
-                    }
-                }
-
-            Button {
-                text: "Start simulation"
-                onClicked: navigation.active
-            }
-*/
-        //navigator end
-}
-}

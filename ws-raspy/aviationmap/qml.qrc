@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>map.qml</file>
+        <file>flightparameters.csv</file>
     </qresource>
 </RCC>

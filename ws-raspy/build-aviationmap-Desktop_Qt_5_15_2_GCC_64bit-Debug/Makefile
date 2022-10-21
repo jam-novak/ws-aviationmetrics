@@ -52,13 +52,19 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../aviationmap/main.cpp \
-		../aviationmap/mainwindow.cpp qrc_qml.cpp \
-		moc_mainwindow.cpp
-OBJECTS       = main.o \
+SOURCES       = ../aviationmap/csv.cpp \
+		../aviationmap/main.cpp \
+		../aviationmap/mainwindow.cpp \
+		../aviationmap/myglobalobject.cpp qrc_qml.cpp \
+		moc_mainwindow.cpp \
+		moc_myglobalobject.cpp
+OBJECTS       = csv.o \
+		main.o \
 		mainwindow.o \
+		myglobalobject.o \
 		qrc_qml.o \
-		moc_mainwindow.o
+		moc_mainwindow.o \
+		moc_myglobalobject.o
 DIST          = /home/Qt/5.15.2/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/common/unix.conf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/common/linux.conf \
@@ -270,8 +276,12 @@ DIST          = /home/Qt/5.15.2/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/exceptions.prf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/yacc.prf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/lex.prf \
-		../aviationmap/aviationmap.pro ../aviationmap/mainwindow.h ../aviationmap/main.cpp \
-		../aviationmap/mainwindow.cpp
+		../aviationmap/aviationmap.pro ../aviationmap/csv.h \
+		../aviationmap/mainwindow.h \
+		../aviationmap/myglobalobject.h ../aviationmap/csv.cpp \
+		../aviationmap/main.cpp \
+		../aviationmap/mainwindow.cpp \
+		../aviationmap/myglobalobject.cpp
 QMAKE_TARGET  = aviationmap
 DESTDIR       = 
 TARGET        = aviationmap
@@ -726,8 +736,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../aviationmap/qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/Qt/5.15.2/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../aviationmap/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../aviationmap/main.cpp ../aviationmap/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../aviationmap/csv.h ../aviationmap/mainwindow.h ../aviationmap/myglobalobject.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../aviationmap/csv.cpp ../aviationmap/main.cpp ../aviationmap/mainwindow.cpp ../aviationmap/myglobalobject.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../aviationmap/mainwindow.ui $(DISTDIR)/
 
 
@@ -757,6 +767,7 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_qml.cpp
 qrc_qml.cpp: ../aviationmap/qml.qrc \
 		/home/Qt/5.15.2/gcc_64/bin/rcc \
+		../aviationmap/flightparameters.csv \
 		../aviationmap/map.qml
 	/home/Qt/5.15.2/gcc_64/bin/rcc -name qml ../aviationmap/qml.qrc -o qrc_qml.cpp
 
@@ -766,9 +777,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /home/Qt/5.15.2/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h /home/Qt/5.15.2/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_myglobalobject.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_myglobalobject.cpp
 moc_mainwindow.cpp: ../aviationmap/mainwindow.h \
 		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QMainWindow \
 		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -876,9 +887,190 @@ moc_mainwindow.cpp: ../aviationmap/mainwindow.h \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/QQmlApplicationEngine \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlapplicationengine.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlengine.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qjsengine.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qjsvalue.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qtqmlglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qtqml-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmldebug.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqml.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlprivate.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlparserstatus.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmllist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlpropertyvaluesource.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qpointer.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmetaobject.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlerror.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/QQmlContext \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlcontext.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QObject \
+		../aviationmap/csv.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QString \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QTextStream \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QFile \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QDebug \
+		../aviationmap/myglobalobject.h \
+		../aviationmap/mainwindow.h \
 		moc_predefs.h \
 		/home/Qt/5.15.2/gcc_64/bin/moc
 	/home/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/jam/Documents/ws-aviationmetrics/ws-raspy/build-aviationmap-Desktop_Qt_5_15_2_GCC_64bit-Debug/moc_predefs.h -I/home/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/jam/Documents/ws-aviationmetrics/ws-raspy/aviationmap -I/home/Qt/5.15.2/gcc_64/include -I/home/Qt/5.15.2/gcc_64/include/QtLocation -I/home/Qt/5.15.2/gcc_64/include/QtPositioningQuick -I/home/Qt/5.15.2/gcc_64/include/QtQuickWidgets -I/home/Qt/5.15.2/gcc_64/include/QtQuick -I/home/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/Qt/5.15.2/gcc_64/include/QtGui -I/home/Qt/5.15.2/gcc_64/include/QtPositioning -I/home/Qt/5.15.2/gcc_64/include/QtQmlModels -I/home/Qt/5.15.2/gcc_64/include/QtQml -I/home/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/c++/12.2.0 -I/usr/include/c++/12.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/12.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include-fixed -I/usr/include ../aviationmap/mainwindow.h -o moc_mainwindow.cpp
+
+moc_myglobalobject.cpp: ../aviationmap/myglobalobject.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QObject \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qtcore-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsysinfo.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qlogging.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qflags.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qatomic.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qbytearray.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qrefcount.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qarraydata.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringliteral.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringview.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qlist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qalgorithms.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qiterator.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qpair.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qvector.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qpoint.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringlist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qregexp.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcoreevent.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmetatype.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
+		../aviationmap/mainwindow.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QMainWindow \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qmainwindow.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qtgui-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qwidget.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmargins.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qrect.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsize.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qpalette.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qcolor.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qrgb.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qrgba64.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qbrush.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qmatrix.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qpolygon.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qregion.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qdatastream.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qline.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qtransform.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qimage.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qpixelformat.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qpixmap.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qshareddata.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qfont.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qfontinfo.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qcursor.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qkeysequence.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qevent.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qlocale.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qset.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qurl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qurlquery.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qfile.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qfiledevice.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/QQmlApplicationEngine \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlapplicationengine.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlengine.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qjsengine.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qjsvalue.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qtqmlglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qtqml-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmldebug.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqml.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlprivate.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlparserstatus.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmllist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlpropertyvaluesource.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qpointer.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmetaobject.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlerror.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/QQmlContext \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlcontext.h \
+		../aviationmap/csv.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QString \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QTextStream \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QFile \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QDebug \
+		../aviationmap/myglobalobject.h \
+		moc_predefs.h \
+		/home/Qt/5.15.2/gcc_64/bin/moc
+	/home/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/jam/Documents/ws-aviationmetrics/ws-raspy/build-aviationmap-Desktop_Qt_5_15_2_GCC_64bit-Debug/moc_predefs.h -I/home/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/jam/Documents/ws-aviationmetrics/ws-raspy/aviationmap -I/home/Qt/5.15.2/gcc_64/include -I/home/Qt/5.15.2/gcc_64/include/QtLocation -I/home/Qt/5.15.2/gcc_64/include/QtPositioningQuick -I/home/Qt/5.15.2/gcc_64/include/QtQuickWidgets -I/home/Qt/5.15.2/gcc_64/include/QtQuick -I/home/Qt/5.15.2/gcc_64/include/QtWidgets -I/home/Qt/5.15.2/gcc_64/include/QtGui -I/home/Qt/5.15.2/gcc_64/include/QtPositioning -I/home/Qt/5.15.2/gcc_64/include/QtQmlModels -I/home/Qt/5.15.2/gcc_64/include/QtQml -I/home/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/c++/12.2.0 -I/usr/include/c++/12.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/12.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/12.2.0/include-fixed -I/usr/include ../aviationmap/myglobalobject.h -o moc_myglobalobject.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -901,6 +1093,79 @@ compiler_lex_clean:
 compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
+
+csv.o: ../aviationmap/csv.cpp ../aviationmap/csv.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QString \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qtcore-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsysinfo.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qlogging.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qflags.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qatomic.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qbytearray.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qrefcount.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qarraydata.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringliteral.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringview.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QTextStream \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qlist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qalgorithms.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qiterator.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qpair.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qvector.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qpoint.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringlist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qregexp.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcoreevent.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmetatype.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qlocale.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qset.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qshareddata.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QFile \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qfile.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qfiledevice.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o csv.o ../aviationmap/csv.cpp
 
 main.o: ../aviationmap/main.cpp ../aviationmap/mainwindow.h \
 		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QMainWindow \
@@ -1033,7 +1298,16 @@ main.o: ../aviationmap/main.cpp ../aviationmap/mainwindow.h \
 		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlpropertyvaluesource.h \
 		/home/Qt/5.15.2/gcc_64/include/QtCore/qpointer.h \
 		/home/Qt/5.15.2/gcc_64/include/QtCore/qmetaobject.h \
-		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlerror.h
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlerror.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/QQmlContext \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlcontext.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QObject \
+		../aviationmap/csv.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QString \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QTextStream \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QFile \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QDebug \
+		../aviationmap/myglobalobject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../aviationmap/main.cpp
 
 mainwindow.o: ../aviationmap/mainwindow.cpp ../aviationmap/mainwindow.h \
@@ -1143,16 +1417,46 @@ mainwindow.o: ../aviationmap/mainwindow.cpp ../aviationmap/mainwindow.h \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/QQmlApplicationEngine \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlapplicationengine.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlengine.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qjsengine.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qjsvalue.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qtqmlglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qtqml-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmldebug.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqml.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlprivate.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlparserstatus.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmllist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlpropertyvaluesource.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qpointer.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmetaobject.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlerror.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/QQmlContext \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlcontext.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QObject \
+		../aviationmap/csv.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QString \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QTextStream \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QFile \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QDebug \
+		../aviationmap/myglobalobject.h \
 		ui_mainwindow.h \
 		/home/Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		/home/Qt/5.15.2/gcc_64/include/QtQuickWidgets/QQuickWidget \
 		/home/Qt/5.15.2/gcc_64/include/QtQuickWidgets/qquickwidget.h \
 		/home/Qt/5.15.2/gcc_64/include/QtQuick/qquickwindow.h \
 		/home/Qt/5.15.2/gcc_64/include/QtQuick/qtquickglobal.h \
-		/home/Qt/5.15.2/gcc_64/include/QtQml/qtqmlglobal.h \
-		/home/Qt/5.15.2/gcc_64/include/QtQml/qtqml-config.h \
-		/home/Qt/5.15.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		/home/Qt/5.15.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
 		/home/Qt/5.15.2/gcc_64/include/QtQuick/qtquick-config.h \
 		/home/Qt/5.15.2/gcc_64/include/QtQuick/qsgrendererinterface.h \
 		/home/Qt/5.15.2/gcc_64/include/QtQuick/qsgnode.h \
@@ -1169,28 +1473,12 @@ mainwindow.o: ../aviationmap/mainwindow.cpp ../aviationmap/mainwindow.h \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qquaternion.h \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qgenericmatrix.h \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qwindow.h \
-		/home/Qt/5.15.2/gcc_64/include/QtCore/QObject \
 		/home/Qt/5.15.2/gcc_64/include/QtCore/QEvent \
 		/home/Qt/5.15.2/gcc_64/include/QtCore/QMargins \
 		/home/Qt/5.15.2/gcc_64/include/QtCore/QRect \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qsurface.h \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qsurfaceformat.h \
-		/home/Qt/5.15.2/gcc_64/include/QtQml/qqml.h \
-		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlprivate.h \
-		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlparserstatus.h \
-		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmllist.h \
-		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlpropertyvaluesource.h \
-		/home/Qt/5.15.2/gcc_64/include/QtCore/qpointer.h \
-		/home/Qt/5.15.2/gcc_64/include/QtCore/qmetaobject.h \
-		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmldebug.h \
 		/home/Qt/5.15.2/gcc_64/include/QtQuickWidgets/qtquickwidgetsglobal.h \
-		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
-		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
-		/home/Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
-		/home/Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
-		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		/home/Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
-		/home/Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
 		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QMenuBar \
 		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qmenubar.h \
 		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qmenu.h \
@@ -1201,11 +1489,157 @@ mainwindow.o: ../aviationmap/mainwindow.cpp ../aviationmap/mainwindow.h \
 		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../aviationmap/mainwindow.cpp
 
+myglobalobject.o: ../aviationmap/myglobalobject.cpp ../aviationmap/myglobalobject.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QObject \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qtcore-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsysinfo.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qlogging.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qflags.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qatomic.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qbytearray.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qrefcount.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qarraydata.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringliteral.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringview.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qlist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qalgorithms.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qiterator.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qpair.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qvector.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qpoint.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringlist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qregexp.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcoreevent.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmetatype.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
+		../aviationmap/mainwindow.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QMainWindow \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qmainwindow.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qtgui-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qwidget.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmargins.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qrect.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsize.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qpalette.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qcolor.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qrgb.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qrgba64.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qbrush.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qmatrix.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qpolygon.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qregion.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qdatastream.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qline.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qtransform.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qimage.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qpixelformat.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qpixmap.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qshareddata.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qfont.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qfontinfo.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qcursor.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qkeysequence.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qevent.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qlocale.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qset.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qurl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qurlquery.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qfile.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qfiledevice.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qvector2d.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qicon.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qeventloop.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/QQmlApplicationEngine \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlapplicationengine.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlengine.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qjsengine.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qjsvalue.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qtqmlglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qtqml-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmldebug.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqml.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlprivate.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlparserstatus.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmllist.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlpropertyvaluesource.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qpointer.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qmetaobject.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlerror.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/QQmlContext \
+		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlcontext.h \
+		../aviationmap/csv.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QString \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QTextStream \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QFile \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o myglobalobject.o ../aviationmap/myglobalobject.cpp
+
 qrc_qml.o: qrc_qml.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_qml.o qrc_qml.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_myglobalobject.o: moc_myglobalobject.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_myglobalobject.o moc_myglobalobject.cpp
 
 ####### Install
 
