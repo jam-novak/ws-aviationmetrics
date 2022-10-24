@@ -93,12 +93,15 @@ import Qt.labs.location 1.0
                 {
                     timeText.text =  Qt.formatTime(new Date(),"hh:mm")
                     //mapPolyline.addCoordinate(QtPositioning.coordinate(47.84, 13.12))
-                    myGlobalObject.test("TEXT")  // NOTE: myGlobalObject is available here because it is set as a context property in main.cpp
+                    //myGlobalObject.test("TEXT") // NOTE: myGlobalObject is available here because it is set as a context property in main.cpp
+                    mapPolyline.addCoordinate((QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude())))
+
                 }
             }
         }
 
         function gps(){
+
 
          }
     }

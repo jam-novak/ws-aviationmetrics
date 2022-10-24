@@ -1,26 +1,65 @@
 #include "csv.h"
 
+QStringList coordinates;
+QVector<QVector<QString> > vectorOfVectorsOfStrings;
+int counter;
+
 csv::csv(){
     getCoordinate();
 
 }
 
-int csv::getCoordinate(){
-    int coordinate = 0;
+void csv::getCoordinate(){
 
-    QFile file("flightparameters.csv");
+    QFile file(":/flightparameters.csv");
         if (!file.open(QIODevice::ReadOnly)) {
             qDebug() << file.errorString();
-            return 1;
+
         }
 
-        QStringList wordList;
         while (!file.atEnd()) {
             QByteArray line = file.readLine();
-            wordList.append(line.split(',').first());
+            QString str = line;
+            coordinates = str.split(',');
+            //qDebug() << coordinates;
+
+
+            QVector<QString> foo; //create a QVector of QStrings
+            foo.push_back(coordinates[0]);
+            foo.push_back(coordinates[1]);
+            vectorOfVectorsOfStrings.push_back(foo); //add the created vector as a line in your 2D vector
+
+
         }
 
-        qDebug() << wordList;
 
-    return coordinate;
+   /*     for(int i = 0; i < vectorOfVectorsOfStrings.size(); i++)
+        {
+            for(int j = 0; j < vectorOfVectorsOfStrings[i].size(); j++)
+            {
+                //do stuff with the QString vectorOfVectorsOfStrings[i][j]
+                qDebug() << vectorOfVectorsOfStrings[i][j];
+            }
+        }
+        */
+}
+
+qreal csv::getLatitude(){
+    qreal latitude;
+
+    latitude = (vectorOfVectorsOfStrings[counter][0]).toDouble();
+    counter++;
+
+    return latitude;
+
+
+}
+
+qreal csv::getLongitude(){
+    qreal longitude;
+
+    longitude = (vectorOfVectorsOfStrings[counter][1]).toDouble();
+
+    return longitude;
+
 }

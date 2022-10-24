@@ -2,7 +2,6 @@
 #define MYGLOBALOBJECT_H
 
 #include <QObject>
-#include "mainwindow.h"
 
 class MyGlobalObject : public QObject
 {
@@ -14,6 +13,8 @@ class MyGlobalObject : public QObject
 
     public slots:
     void test(const QString &text);
+    qreal getLatitude();
+    qreal getLongitude();
 };
 
 #endif // MYGLOBALOBJECT_H

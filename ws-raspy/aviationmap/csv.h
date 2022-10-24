@@ -11,7 +11,9 @@ class csv
 
     public:
         csv(void);
-        int getCoordinate();
+        void getCoordinate();
+        qreal getLatitude();
+        qreal getLongitude();
 
 
 
