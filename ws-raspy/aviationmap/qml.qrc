@@ -2,5 +2,11 @@
     <qresource prefix="/">
         <file>map.qml</file>
         <file>flightparameters.csv</file>
+        <file>Airspeed.qml</file>
+        <file>flightinstrumentstest.qml</file>
+        <file>Rescources/Airspeed/asi.svg</file>
+        <file>Rescources/Airspeed/asi_case.svg</file>
+        <file>Rescources/Airspeed/asi_face.svg</file>
+        <file>Rescources/Airspeed/asi_hand.svg</file>
     </qresource>
 </RCC>

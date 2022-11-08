@@ -4,7 +4,6 @@ import QtLocation 5.6
 import QtPositioning 5.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-//import GeneralMagic 2.0
 import Qt.labs.location 1.0
 
 
@@ -12,20 +11,6 @@ import Qt.labs.location 1.0
         width: 640
         height: 480
         visible: true
-
-        //general magic token
-      /*  Component.onCompleted: {
-            //! [Set token safely]
-            ServicesManager.settings.token = __my_secret_token;
-            //! [Set token safely]
-            ServicesManager.settings.allowInternetConnection = true; // enable connection to online services
-
-            var updater = ServicesManager.contentUpdater(ContentItem.Type.RoadMap);
-            updater.autoApplyWhenReady = true;
-            updater.update();
-        }
-        */
-
 
 
         //open street map source
@@ -81,13 +66,22 @@ import Qt.labs.location 1.0
                 text: Qt.formatTime(new Date(),"hh:mm")
             }
 
+
+
+                Airspeed {
+                    anchors.fill: parent
+                    id: speedometer
+                    radius: 0.2 * Math.min(parent.width, parent.height)
+                    airspeed: myGlobalObject.getAirspeed()
+                }
+
+
             //1 min
             Timer {
                 id: timer
                 interval: 1000      //ms
                 repeat: true
                 running: true
-                //property int lastcoordinate =
 
                 onTriggered:
                 {
@@ -95,14 +89,10 @@ import Qt.labs.location 1.0
                     //mapPolyline.addCoordinate(QtPositioning.coordinate(47.84, 13.12))
                     //myGlobalObject.test("TEXT") // NOTE: myGlobalObject is available here because it is set as a context property in main.cpp
                     mapPolyline.addCoordinate((QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude())))
+                    speedometer.airspeed = myGlobalObject.getAirspeed()
 
                 }
             }
         }
-
-        function gps(){
-
-
-         }
     }
 

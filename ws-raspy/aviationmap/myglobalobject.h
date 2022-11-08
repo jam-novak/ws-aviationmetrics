@@ -15,6 +15,7 @@ class MyGlobalObject : public QObject
     void test(const QString &text);
     qreal getLatitude();
     qreal getLongitude();
+    double getAirspeed();
 };
 
 #endif // MYGLOBALOBJECT_H

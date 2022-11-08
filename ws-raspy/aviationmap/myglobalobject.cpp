@@ -25,3 +25,8 @@ qreal MyGlobalObject::getLongitude(){
     return csv.getLongitude();
 
 }
+
+double MyGlobalObject::getAirspeed(){
+    csv csv;
+    return csv.getAirspeed();
+}

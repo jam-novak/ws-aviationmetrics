@@ -1,11 +1,12 @@
 #include "csv.h"
 
-QStringList coordinates;
-QVector<QVector<QString> > vectorOfVectorsOfStrings;
+QStringList data;
+QVector<QVector<QString>> vectorOfVectorsOfStrings;
 int counter;
 
 csv::csv(){
     getCoordinate();
+
 
 }
 
@@ -20,13 +21,14 @@ void csv::getCoordinate(){
         while (!file.atEnd()) {
             QByteArray line = file.readLine();
             QString str = line;
-            coordinates = str.split(',');
-            //qDebug() << coordinates;
+            data = str.split(',');
+            //qDebug() <<s coordinates;
 
 
             QVector<QString> foo; //create a QVector of QStrings
-            foo.push_back(coordinates[0]);
-            foo.push_back(coordinates[1]);
+            foo.push_back(data[0]);     //latitude
+            foo.push_back(data[1]);     //longitude
+            foo.push_back(data[2]);     //speed
             vectorOfVectorsOfStrings.push_back(foo); //add the created vector as a line in your 2D vector
 
 
@@ -62,4 +64,12 @@ qreal csv::getLongitude(){
 
     return longitude;
 
+}
+
+double csv::getAirspeed(){
+    double airspeed;
+
+    airspeed = (vectorOfVectorsOfStrings[counter][2]).toDouble();
+
+    return airspeed;
 }

@@ -14,6 +14,7 @@ class csv
         void getCoordinate();
         qreal getLatitude();
         qreal getLongitude();
+        double getAirspeed();
 
 
 
