@@ -5,94 +5,152 @@ import QtPositioning 5.6
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Qt.labs.location 1.0
+import QtQuick.Layouts 1.3
 
 
-    Window{
-        width: 640
-        height: 480
-        visible: true
+Window{
+    minimumWidth: 640
+    minimumHeight: 480
+    //visibility: Window.Maximized
+    visible: true
 
 
-        //open street map source
-        Plugin {
-            id: mapPlugin
-            name: "osm" // "mapboxgl", "esri", ...
-            PluginParameter {
-                        name: "osm.mapping.providersrepository.disabled"
-                        value: "true"
-                    }
+    //open street map source
+    Plugin {
+        id: mapPlugin
+        name: "osm" // "mapboxgl", "esri", ...
+        PluginParameter {
+            name: "osm.mapping.providersrepository.disabled"
+            value: "true"
+        }
 
-             PluginParameter {
-                        name: "osm.mapping.providersrepository.address"
-                        value: "http://maps-redirect.qt.io/osm/5.6/"
-                    }
-             }
+        PluginParameter {
+            name: "osm.mapping.providersrepository.address"
+            value: "http://maps-redirect.qt.io/osm/5.6/"
+        }
+    }
 
-            //map display
-            Map {
-                anchors.fill: parent
-                plugin: mapPlugin
-                center: QtPositioning.coordinate(47.80, 13.12) //gaisberg
-                zoomLevel: 14
-                copyrightsVisible: false
-
-
-                //route display
-                MapPolyline {
-                        id: mapPolyline
-                        line.width: 8
-                        line.color: 'red'
-
-                        path: [
-                            { latitude: 47.80, longitude: 13.12 },
-                            { latitude: 47.81, longitude: 13.12 },
-                           /* { latitude: 47.82, longitude: 13.12 },
-                            { latitude: 47.83, longitude: 13.12 } */
-                        ]
-                    }
-                //redundant
-                Route{
-                    id: myroute
-                    path: mapPolyline.path
-
-                }
+    //map display
+    Map {
+        id: mapid
+        anchors.fill: parent
+        plugin: mapPlugin
+        center: QtPositioning.coordinate(47.80, 13.12) //gaisberg
+        zoomLevel: 14
+        copyrightsVisible: false
 
 
-            //clocktime
-            Text {
-                id: timeText
-                x: Window.width - 35
-                y:  Window.height - 25
-                text: Qt.formatTime(new Date(),"hh:mm")
-            }
+        //route display
+        MapPolyline {
+            id: mapPolyline
+            line.width: 8
+            line.color: 'red'
+
+            path: [
+                { latitude: 47.80, longitude: 13.12 },
+                { latitude: 47.81, longitude: 13.12 },
+                /* { latitude: 47.82, longitude: 13.12 },
+                   { latitude: 47.83, longitude: 13.12 } */
+            ]
+        }
+        //redundant
+        Route{
+            id: myroute
+            path: mapPolyline.path
+        }
 
 
+        //clocktime
+        Text {
+            id: timeText
+            x: Window.width - 35
+            y:  Window.height - 25
+            text: Qt.formatTime(new Date(),"hh:mm")
+        }
+
+
+        Item {
+            anchors.fill: parent
+            width: 100
+            height: 100
+
+            RowLayout {
+                id: layout
+                anchors.bottom: parent.bottom
+                anchors.top: parent.verticalCenter
+                spacing: 6
 
                 Airspeed {
-                    anchors.fill: parent
+                    /* Layout.row: 0
+                    Layout.column: 0
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true*/
                     id: speedometer
-                    radius: 0.2 * Math.min(parent.width, parent.height)
+                    radius: 0.1 * Math.min(parent.width, parent.height)
                     airspeed: myGlobalObject.getAirspeed()
                 }
 
+                ArtificialHorizon{
+                    /* Layout.row: 0
+                    Layout.column: 1
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true*/
+                    id: khorizonz
+                    radius: 0.1 * Math.min(parent.width, parent.height)
+                    roll: myGlobalObject.getRoll()
+                    pitch: myGlobalObject.getSteigrate()
+                }
 
-            //1 min
-            Timer {
-                id: timer
-                interval: 1000      //ms
-                repeat: true
-                running: true
+                Altimeter {
+                    /*Layout.row: 0
+                    Layout.column: 2
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true*/
+                    id: heightindicator
+                    radius: 0.1 * Math.min(parent.width, parent.height)
+                    altitude: myGlobalObject.getAltitude()
+                    pressure: myGlobalObject.getPressure()
+                }
 
-                onTriggered:
-                {
-                    timeText.text =  Qt.formatTime(new Date(),"hh:mm")
-                    //mapPolyline.addCoordinate(QtPositioning.coordinate(47.84, 13.12))
-                    //myGlobalObject.test("TEXT") // NOTE: myGlobalObject is available here because it is set as a context property in main.cpp
-                    mapPolyline.addCoordinate((QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude())))
-                    speedometer.airspeed = myGlobalObject.getAirspeed()
-
+                Vario {
+                    /*Layout.row: 0
+                    Layout.column: 3
+                    Layout.fillHeight: true*/
+                    id: wario
+                    radius: 0.1 * Math.min(parent.width, parent.height)
+                    climbRate: myGlobalObject.getAltitude()
                 }
             }
         }
+
+        //1 min
+        Timer {
+            id: timer
+            interval: 1000      //ms
+            repeat: true
+            running: true
+
+            onTriggered:
+            {
+                timeText.text =  Qt.formatTime(new Date(),"hh:mm")
+                //mapPolyline.addCoordinate(QtPositioning.coordinate(47.84, 13.12))
+                //myGlobalObject.test("TEXT") // NOTE: myGlobalObject is available here because it is set as a context property in main.cpp
+
+                mapPolyline.addCoordinate((QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude())))
+                mapid.center = (QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude()))
+
+                speedometer.airspeed = myGlobalObject.getAirspeed()
+
+                khorizonz.roll = myGlobalObject.getRoll()
+                khorizonz.pitch = myGlobalObject.getSteigrate()
+
+                heightindicator.altitude = myGlobalObject.getAltitude()
+                heightindicator.pressure = myGlobalObject.getPressure()
+
+                wario.climbRate = myGlobalObject.getAltitude()
+
+            }
+        }
     }
+}
 

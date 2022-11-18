@@ -30,3 +30,23 @@ double MyGlobalObject::getAirspeed(){
     csv csv;
     return csv.getAirspeed();
 }
+
+double MyGlobalObject::getSteigrate(){
+    csv csv;
+    return csv.getSteigrate();
+}
+
+double MyGlobalObject::getRoll(){
+    csv csv;
+    return csv.getRoll();
+}
+
+double MyGlobalObject::getAltitude(){
+    csv csv;
+    return csv.getAltitude();
+}
+
+double MyGlobalObject::getPressure(){
+    csv csv;
+    return csv.getPressure();
+}

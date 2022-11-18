@@ -28,5 +28,37 @@ Window {
                 airspeed: myGlobalObject.getAirspeed()
             }
         }
+
+        Item{
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            ArtificialHorizon{
+                radius: 0.1 * Math.min(parent.width, parent.height)
+                roll: myGlobalObject.getRoll()
+                pitch: myGlobalObject.getSteigrate()
+            }
+        }
+
+        Item {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            Altimeter {
+                radius: 0.1 * Math.min(parent.width, parent.height)
+                altitude: myGlobalObject.getAltitude()
+                pressure: myGlobalObject.getPressure()
+            }
+        }
+
+        Item {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            Vario {
+                radius: 0.5 * Math.min(parent.width, parent.height)
+                climbRate: pfd.climbRate
+            }
+        }
     }
 }

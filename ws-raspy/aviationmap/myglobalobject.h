@@ -16,6 +16,10 @@ class MyGlobalObject : public QObject
     qreal getLatitude();
     qreal getLongitude();
     double getAirspeed();
+    double getSteigrate();
+    double getRoll();
+    double getAltitude();
+    double getPressure();
 };
 
 #endif // MYGLOBALOBJECT_H

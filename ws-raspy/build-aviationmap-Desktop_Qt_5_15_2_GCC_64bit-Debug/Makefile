@@ -779,14 +779,33 @@ compiler_rcc_clean:
 	-$(DEL_FILE) qrc_qml.cpp
 qrc_qml.cpp: ../aviationmap/qml.qrc \
 		/home/Qt/5.15.2/gcc_64/bin/rcc \
+		../aviationmap/Vario.qml \
 		../aviationmap/Airspeed.qml \
 		../aviationmap/flightparameters.csv \
 		../aviationmap/map.qml \
+		../aviationmap/ArtificialHorizon.qml \
 		../aviationmap/flightinstrumentstest.qml \
+		../aviationmap/Altimeter.qml \
 		../aviationmap/Rescources/Airspeed/asi_case.svg \
 		../aviationmap/Rescources/Airspeed/asi_hand.svg \
 		../aviationmap/Rescources/Airspeed/asi_face.svg \
-		../aviationmap/Rescources/Airspeed/asi.svg
+		../aviationmap/Rescources/Airspeed/asi.svg \
+		../aviationmap/Rescources/Altimeter/alt_face_1.svg \
+		../aviationmap/Rescources/Altimeter/alt_hand_1.svg \
+		../aviationmap/Rescources/Altimeter/alt.svg \
+		../aviationmap/Rescources/Altimeter/alt_case.svg \
+		../aviationmap/Rescources/Altimeter/alt_face_3.svg \
+		../aviationmap/Rescources/Altimeter/alt_face_2.svg \
+		../aviationmap/Rescources/Altimeter/alt_hand_2.svg \
+		../aviationmap/Rescources/ArtificialHorizon/ai_ring.svg \
+		../aviationmap/Rescources/ArtificialHorizon/ai_face.svg \
+		../aviationmap/Rescources/ArtificialHorizon/ai_case.svg \
+		../aviationmap/Rescources/ArtificialHorizon/ai.svg \
+		../aviationmap/Rescources/ArtificialHorizon/ai_back.svg \
+		../aviationmap/Rescources/Vario/vsi.svg \
+		../aviationmap/Rescources/Vario/vsi_hand.svg \
+		../aviationmap/Rescources/Vario/vsi_face.svg \
+		../aviationmap/Rescources/Vario/vsi_case.svg
 	/home/Qt/5.15.2/gcc_64/bin/rcc -name qml ../aviationmap/qml.qrc -o qrc_qml.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h

@@ -15,7 +15,10 @@ class csv
         qreal getLatitude();
         qreal getLongitude();
         double getAirspeed();
-
+        double getSteigrate();
+        double getRoll();
+        double getAltitude();
+        double getPressure();
 
 
 };

@@ -58,6 +58,25 @@ void PrimaryFlightData::setAirspeed(double newAirspeed)
     emit airspeedChanged();
 }
 
+double PrimaryFlightData::roll() const
+{
+    return mRoll;
+}
+
+void PrimaryFlightData::setRoll(double newRoll)
+{
+    if (std::isnan(newRoll) || qFuzzyCompare(mRoll, newRoll))
+        return;
+
+    if (newRoll < -180)
+        newRoll = -180;
+    else if (newRoll > 180)
+        newRoll = 180;
+
+    mRoll = newRoll;
+    emit rollChanged();
+}
+
 double PrimaryFlightData::angleOfAttack() const
 {
     return mAngleOfAttack;
@@ -96,24 +115,7 @@ void PrimaryFlightData::setAngleOfSideSlip(double newAngleOfSideSlip)
     emit angleOfSideSlipChanged();
 }
 
-double PrimaryFlightData::roll() const
-{
-    return mRoll;
-}
 
-void PrimaryFlightData::setRoll(double newRoll)
-{
-    if (std::isnan(newRoll) || qFuzzyCompare(mRoll, newRoll))
-        return;
-
-    if (newRoll < -180)
-        newRoll = -180;
-    else if (newRoll > 180)
-        newRoll = 180;
-
-    mRoll = newRoll;
-    emit rollChanged();
-}
 
 double PrimaryFlightData::pitch() const
 {
