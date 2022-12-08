@@ -1,4 +1,4 @@
-/*
+
 #include "serialJames.h"
 #include <QDebug>
 #include <QtSerialPort/QSerialPortInfo>
@@ -19,23 +19,16 @@ SerialJames::SerialJames(QSerialPort *port, QObject *parent) : QObject(parent), 
 }
 
 SerialJames::~SerialJames() {
-    this->serialPort->close();
+    if(serialPort->isOpen()){
+        this->serialPort->close();
+    }
+    delete serialPort;      //speicherleiche
+
 }
 
 void SerialJames::handleReadyRead() {
     this->dataBuffer = this->serialPort->readAll();
-    this->cmdBuffer += dataBuffer;
 
-    if (cmdBuffer.contains(0x04)) {
-        int n = cmdBuffer.count(0x04);
-        QList<QByteArray> parts = cmdBuffer.split(0x04);
-        for (int i = 0; i < n; i++) {
-            QByteArray cmd_data;
-            cmd_data = parts[i];
-            this->cmdBuffer = cmdBuffer.remove(0, cmd_data.length());
-        }
-    }
-    emit readerDataReady(&dataBuffer);
 }
 
 bool SerialJames::openPort(QSerialPortInfo& port) {
@@ -51,4 +44,4 @@ void SerialJames::close() {
         this->serialPort->close();
     }
 }
-*/
+

@@ -1,4 +1,4 @@
-/*#ifndef SERIALJAMES_H
+#ifndef SERIALJAMES_H
 #define SERIALJAMES_H
 
 #include <QObject>
@@ -12,7 +12,6 @@ class SerialJames : public QObject
 private:
     QSerialPort *serialPort = nullptr;
     QByteArray dataBuffer;
-    QByteArray cmdBuffer;
 
 public:
     explicit SerialJames(QObject *parent = nullptr);
@@ -23,7 +22,6 @@ public:
 
 signals:
     void readerDataReady(QByteArray *data);
-    void readerCommandReady(Command *cmd);
 
 private slots:
     void handleReadyRead();
@@ -31,4 +29,4 @@ private slots:
 };
 
 #endif // SERIALJAMES_H
-*/
+
