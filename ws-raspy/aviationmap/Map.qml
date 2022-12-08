@@ -11,7 +11,7 @@ import QtQuick.Layouts 1.3
 Window{
     minimumWidth: 640
     minimumHeight: 480
-    //visibility: Window.Maximized
+    visibility: Window.Maximized
     visible: true
 
 
@@ -74,17 +74,19 @@ Window{
             width: 100
             height: 100
 
-            RowLayout {
-                id: layout
-                anchors.bottom: parent.bottom
-                anchors.top: parent.verticalCenter
-                spacing: 6
+            GridLayout {
+                columns: 4
+
+                anchors {
+                    fill: parent
+                    margins: 16
+                }
 
                 Airspeed {
                     /* Layout.row: 0
-                    Layout.column: 0
+                    Layout.column: 0*/
                     Layout.fillHeight: true
-                    Layout.fillWidth: true*/
+                    Layout.fillWidth: true
                     id: speedometer
                     radius: 0.1 * Math.min(parent.width, parent.height)
                     airspeed: myGlobalObject.getAirspeed()
@@ -92,9 +94,9 @@ Window{
 
                 ArtificialHorizon{
                     /* Layout.row: 0
-                    Layout.column: 1
+                    Layout.column: 1*/
                     Layout.fillHeight: true
-                    Layout.fillWidth: true*/
+                    Layout.fillWidth: true
                     id: khorizonz
                     radius: 0.1 * Math.min(parent.width, parent.height)
                     roll: myGlobalObject.getRoll()
@@ -103,9 +105,9 @@ Window{
 
                 Altimeter {
                     /*Layout.row: 0
-                    Layout.column: 2
+                    Layout.column: 2*/
                     Layout.fillHeight: true
-                    Layout.fillWidth: true*/
+                    Layout.fillWidth: true
                     id: heightindicator
                     radius: 0.1 * Math.min(parent.width, parent.height)
                     altitude: myGlobalObject.getAltitude()
@@ -114,8 +116,9 @@ Window{
 
                 Vario {
                     /*Layout.row: 0
-                    Layout.column: 3
-                    Layout.fillHeight: true*/
+                    Layout.column: 3*/
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
                     id: wario
                     radius: 0.1 * Math.min(parent.width, parent.height)
                     climbRate: myGlobalObject.getAltitude()
@@ -136,6 +139,8 @@ Window{
                 //mapPolyline.addCoordinate(QtPositioning.coordinate(47.84, 13.12))
                 //myGlobalObject.test("TEXT") // NOTE: myGlobalObject is available here because it is set as a context property in main.cpp
 
+
+
                 mapPolyline.addCoordinate((QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude())))
                 mapid.center = (QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude()))
 
@@ -148,6 +153,9 @@ Window{
                 heightindicator.pressure = myGlobalObject.getPressure()
 
                 wario.climbRate = myGlobalObject.getAltitude()
+
+                splash.visible = false
+                splash.timeout()
 
             }
         }

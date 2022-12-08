@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>map.qml</file>
+        <file>Map.qml</file>
         <file>flightparameters.csv</file>
         <file>Airspeed.qml</file>
         <file>flightinstrumentstest.qml</file>
@@ -27,5 +27,8 @@
         <file>Rescources/Vario/vsi_hand.svg</file>
         <file>Altimeter.qml</file>
         <file>Vario.qml</file>
+        <file>Main.qml</file>
+        <file>Menu.qml</file>
+        <file>Rescources/Menu/background.jpg</file>
     </qresource>
 </RCC>

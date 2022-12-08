@@ -2,6 +2,7 @@
 #define MYGLOBALOBJECT_H
 
 #include <QObject>
+#include "csv.h"
 
 class MyGlobalObject : public QObject
 {
@@ -9,7 +10,8 @@ class MyGlobalObject : public QObject
     Q_OBJECT
 
     public:
-    MyGlobalObject();
+    CSV csv;
+    MyGlobalObject(CSV csv);
 
     public slots:
     void test(const QString &text);

@@ -6,11 +6,20 @@
 #include <QFile>
 #include <QDebug>
 
-class csv
+class CSV
 {
 
     public:
-        csv(void);
+        qreal latitude;
+        qreal longitude;
+        double airspeed;
+        double steigrate;
+        double roll;
+        double altitude;
+        double pressure;
+
+        CSV(void);
+        void create();
         void getCoordinate();
         qreal getLatitude();
         qreal getLongitude();

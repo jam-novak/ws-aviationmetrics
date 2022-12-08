@@ -4,14 +4,21 @@ QStringList data;
 QVector<QVector<QString>> vectorOfVectorsOfStrings;
 int counter;
 
-csv::csv(){
+CSV::CSV(){
     getCoordinate();
 
 
 }
 
-void csv::getCoordinate(){
+void CSV::create(){
+    QFile file(":/flightparameters.csv");
+    file.open(QIODevice::ReadWrite);
 
+    //write serial data
+
+}
+
+void CSV::getCoordinate(){
     QFile file(":/flightparameters.csv");
         if (!file.open(QIODevice::ReadOnly)) {
             qDebug() << file.errorString();
@@ -50,61 +57,44 @@ void csv::getCoordinate(){
         */
 }
 
-qreal csv::getLatitude(){
-    qreal latitude;
-
+qreal CSV::getLatitude(){
     latitude = (vectorOfVectorsOfStrings[counter][0]).toDouble();
     counter++;
 
     return latitude;
-
-
 }
 
-qreal csv::getLongitude(){
-    qreal longitude;
-
+qreal CSV::getLongitude(){
     longitude = (vectorOfVectorsOfStrings[counter][1]).toDouble();
 
     return longitude;
-
 }
 
-double csv::getAirspeed(){
-    double airspeed;
-
+double CSV::getAirspeed(){
     airspeed = (vectorOfVectorsOfStrings[counter][2]).toDouble();
 
     return airspeed;
 }
 
-double csv::getSteigrate(){
-    double steigrate;
-
+double CSV::getSteigrate(){
     steigrate = (vectorOfVectorsOfStrings[counter][3]).toDouble();
 
     return steigrate;
 }
 
-double csv::getRoll(){
-    double roll;
-
+double CSV::getRoll(){
     roll = (vectorOfVectorsOfStrings[counter][4]).toDouble();
 
     return roll;
 }
 
-double csv::getAltitude(){
-    double altitude;
-
+double CSV::getAltitude(){
     altitude = (vectorOfVectorsOfStrings[counter][5]).toDouble();
 
     return altitude;
 }
 
-double csv::getPressure(){
-    double pressure;
-
+double CSV::getPressure(){
     pressure = (vectorOfVectorsOfStrings[counter][6]).toDouble();
 
     return pressure;

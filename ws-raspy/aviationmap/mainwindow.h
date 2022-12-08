@@ -6,8 +6,6 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QObject>
-#include "csv.h"
-#include "myglobalobject.h"
 
 
 QT_BEGIN_NAMESPACE

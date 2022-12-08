@@ -11,18 +11,23 @@ CONFIG += c++17
 
 SOURCES += \
     Animation.cpp \
+    CSV.cpp \
+    Funk.cpp \
+    Main.cpp \
+    MyGlobalObject.cpp \
     PrimaryFlightData.cpp \
-    csv.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    myglobalobject.cpp
+    SerialJames.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     Animation.h \
-    PrimaryFlightData.h \
     csv.h \
+    funk.h \
+    main.h \
     mainwindow.h \
-    myglobalobject.h
+    myglobalobject.h \
+    primaryFlightData.h \
+    serialJames.h
 
 FORMS += \
     mainwindow.ui
