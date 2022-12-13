@@ -6,9 +6,11 @@ int main(int argc, char *argv[])
     CSV csv;
     QApplication a(argc, argv);
     QQmlApplicationEngine engine;
+    SerialJames serialJames;
+
 
     //map
-    const QUrl url(QStringLiteral("qrc:/map.qml"));
+    QUrl url(QStringLiteral("qrc:/Map.qml"));
     //engine.load(QUrl(QStringLiteral("qrc:/map.qml")));
     QObject::connect(
                 &engine,
@@ -20,7 +22,7 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
 
     //test
-    const QUrl url1(QStringLiteral("qrc:/flightinstrumentstest.qml"));
+    QUrl url1(QStringLiteral("qrc:/flightinstrumentstest.qml"));
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreated,
@@ -32,7 +34,7 @@ int main(int argc, char *argv[])
     Qt::QueuedConnection);
 
     //startmenu
-    const QUrl url2(QStringLiteral("qrc:/Menu.qml"));
+    QUrl url2(QStringLiteral("qrc:/Menu.qml"));
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreated,
@@ -56,6 +58,15 @@ int main(int argc, char *argv[])
     // the object will be available in QML with name "myGlobalObject"
 
     //setup signal slots
+    QObject::connect(myGlobal, &MyGlobalObject::readyForTakeoff,
+                     &a,
+                     [&engine, &url, &serialJames](){
+        engine.load(url);
+        //qDebug() << "signal empfangen";
+        serialJames.openPort();
+
+    }); //lambda function = gleich hier ausgetipselt
+
     //engine.load(url);
     //engine.load(url1);
     engine.load(url2);

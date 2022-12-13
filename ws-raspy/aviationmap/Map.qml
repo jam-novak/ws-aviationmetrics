@@ -3,8 +3,6 @@ import QtQuick.Window 2.14
 import QtLocation 5.6
 import QtPositioning 5.6
 import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import Qt.labs.location 1.0
 import QtQuick.Layouts 1.3
 
 
@@ -153,10 +151,6 @@ Window{
                 heightindicator.pressure = myGlobalObject.getPressure()
 
                 wario.climbRate = myGlobalObject.getAltitude()
-
-                splash.visible = false
-                splash.timeout()
-
             }
         }
     }

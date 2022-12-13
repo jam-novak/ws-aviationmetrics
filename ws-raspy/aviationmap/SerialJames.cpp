@@ -18,13 +18,6 @@ SerialJames::SerialJames(QSerialPort *port, QObject *parent) : QObject(parent), 
     connect(serialPort, &QSerialPort::readyRead, this, &SerialJames::handleReadyRead);
 }
 
-SerialJames::~SerialJames() {
-    if(serialPort->isOpen()){
-        this->serialPort->close();
-    }
-    delete serialPort;      //speicherleiche
-
-}
 
 void SerialJames::handleReadyRead() {
     this->dataBuffer = this->serialPort->readAll();
@@ -44,4 +37,5 @@ void SerialJames::close() {
         this->serialPort->close();
     }
 }
+
 

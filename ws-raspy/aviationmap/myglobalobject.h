@@ -4,6 +4,7 @@
 #include <QObject>
 #include "csv.h"
 
+
 class MyGlobalObject : public QObject
 {
 
@@ -22,6 +23,13 @@ class MyGlobalObject : public QObject
     double getRoll();
     double getAltitude();
     double getPressure();
+    void startFlight();
+    void viewFlight();
+
+    signals:
+    void readyForTakeoff();
+    void reviewFlight();
+
 };
 
 #endif // MYGLOBALOBJECT_H

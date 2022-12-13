@@ -1,3 +1,4 @@
+
 #ifndef SERIALJAMES_H
 #define SERIALJAMES_H
 
@@ -29,4 +30,3 @@ private slots:
 };
 
 #endif // SERIALJAMES_H
-

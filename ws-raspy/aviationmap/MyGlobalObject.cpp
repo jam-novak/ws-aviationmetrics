@@ -42,3 +42,11 @@ double MyGlobalObject::getAltitude(){
 double MyGlobalObject::getPressure(){
     return csv.getPressure();
 }
+
+void MyGlobalObject::startFlight(){
+    emit readyForTakeoff();
+}
+
+void MyGlobalObject::viewFlight(){
+    emit reviewFlight();
+}
