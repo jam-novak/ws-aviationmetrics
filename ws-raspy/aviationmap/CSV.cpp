@@ -1,20 +1,36 @@
 #include "csv.h"
 
-QStringList data;
-QVector<QVector<QString>> vectorOfVectorsOfStrings;
-int counter;
-
-CSV::CSV(){
-    getCoordinate();
-
+CSV::CSV(QObject *parent) : QObject{parent}{
 
 }
 
-void CSV::create(){
+CSV::CSV(CSV &other) : QObject{parent()} {
+
+}
+
+CSV& CSV::operator=(const CSV& other){
+    delete[] this;
+
+    this->latitude = other.latitude;
+    this->longitude = other.longitude;
+    this->airspeed = other.airspeed;
+    this->steigrate = other.steigrate;
+    this->roll = other.roll;
+    this->altitude = other.altitude;
+    this->pressure = other.pressure;
+    this->data = other.data;
+    this->vectorOfVectorsOfStrings = other.vectorOfVectorsOfStrings;
+    this->counter = other.counter;
+
+    return *this;
+}
+
+void CSV::create(QByteArray *data){
     QFile file(":/flightparameters.csv");
     file.open(QIODevice::ReadWrite);
 
     //write serial data
+
 
 }
 
@@ -58,20 +74,20 @@ void CSV::getCoordinate(){
 }
 
 qreal CSV::getLatitude(){
-    latitude = (vectorOfVectorsOfStrings[counter][0]).toDouble();
+    this->latitude = (vectorOfVectorsOfStrings[counter][0]).toDouble();
     counter++;
 
     return latitude;
 }
 
 qreal CSV::getLongitude(){
-    longitude = (vectorOfVectorsOfStrings[counter][1]).toDouble();
+    this->longitude = (vectorOfVectorsOfStrings[counter][1]).toDouble();
 
     return longitude;
 }
 
 double CSV::getAirspeed(){
-    airspeed = (vectorOfVectorsOfStrings[counter][2]).toDouble();
+    this->airspeed = (vectorOfVectorsOfStrings[counter][2]).toDouble();
 
     return airspeed;
 }
@@ -83,19 +99,19 @@ double CSV::getSteigrate(){
 }
 
 double CSV::getRoll(){
-    roll = (vectorOfVectorsOfStrings[counter][4]).toDouble();
+    this->roll = (vectorOfVectorsOfStrings[counter][4]).toDouble();
 
     return roll;
 }
 
 double CSV::getAltitude(){
-    altitude = (vectorOfVectorsOfStrings[counter][5]).toDouble();
+    this->altitude = (vectorOfVectorsOfStrings[counter][5]).toDouble();
 
     return altitude;
 }
 
 double CSV::getPressure(){
-    pressure = (vectorOfVectorsOfStrings[counter][6]).toDouble();
+    this->pressure = (vectorOfVectorsOfStrings[counter][6]).toDouble();
 
     return pressure;
 }

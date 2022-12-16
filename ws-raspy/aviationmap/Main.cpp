@@ -58,14 +58,18 @@ int main(int argc, char *argv[])
     // the object will be available in QML with name "myGlobalObject"
 
     //setup signal slots
+    //menu mode
     QObject::connect(myGlobal, &MyGlobalObject::readyForTakeoff,
                      &a,
                      [&engine, &url, &serialJames](){
         engine.load(url);
         //qDebug() << "signal empfangen";
-        serialJames.openPort();
+        //serialJames.openPort("/dev/tty50");
 
     }); //lambda function = gleich hier ausgetipselt
+
+    //serial data to csv
+    QObject::connect(&serialJames, &SerialJames::readerDataReady, &csv, &CSV::create);
 
     //engine.load(url);
     //engine.load(url1);

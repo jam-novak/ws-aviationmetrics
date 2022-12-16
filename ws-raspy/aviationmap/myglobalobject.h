@@ -12,10 +12,11 @@ class MyGlobalObject : public QObject
 
     public:
     CSV csv;
-    MyGlobalObject(CSV csv);
+    MyGlobalObject(CSV &csv);
 
     public slots:
     void test(const QString &text);
+    //getter
     qreal getLatitude();
     qreal getLongitude();
     double getAirspeed();
@@ -23,12 +24,22 @@ class MyGlobalObject : public QObject
     double getRoll();
     double getAltitude();
     double getPressure();
+    //modes
     void startFlight();
     void viewFlight();
 
     signals:
+    //modes
     void readyForTakeoff();
     void reviewFlight();
+    //getter
+    void latitudesignal();
+    void longitudesignal();
+    void airspeedsignal();
+    void steigratesignal();
+    void rollsignal();
+    void altitudesignal();
+    void pressuresignal();
 
 };
 

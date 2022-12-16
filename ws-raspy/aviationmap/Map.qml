@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Window 2.14
 import QtLocation 5.6
 import QtPositioning 5.6
-import QtQuick.Controls 2.12
+import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.3
 
 
@@ -58,7 +58,7 @@ Window{
         }
 
 
-        //clocktime
+        //time
         Text {
             id: timeText
             x: Window.width - 35
@@ -66,7 +66,7 @@ Window{
             text: Qt.formatTime(new Date(),"hh:mm")
         }
 
-
+        //instruments
         Item {
             anchors.fill: parent
             width: 100
@@ -124,6 +124,39 @@ Window{
             }
         }
 
+        //menubar
+        Item{
+            MenuBar{
+                id: menubar
+                menus: [
+                    { preferencesmenu },
+                    { helpmenu }
+                ]
+
+                Menu{
+                    id: preferencesmenu
+                    title: qsTr("preferences")
+
+                    MenuItem{
+                        text: qsTr("show vario")
+                    }
+
+                }
+
+                Menu{
+                    id: helpmenu
+                    title: qsTr("help")
+
+                }
+
+            }
+        }
+
+        //Zahlenwerte
+        Rectangle{
+
+        }
+
         //1 min
         Timer {
             id: timer
@@ -131,6 +164,7 @@ Window{
             repeat: true
             running: true
 
+            //aktualisieren
             onTriggered:
             {
                 timeText.text =  Qt.formatTime(new Date(),"hh:mm")

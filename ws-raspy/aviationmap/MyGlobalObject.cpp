@@ -1,7 +1,7 @@
 #include "myglobalobject.h"
 #include "csv.h"
 
-MyGlobalObject::MyGlobalObject(CSV csv)
+MyGlobalObject::MyGlobalObject(CSV &csv)
 {
     this->csv = csv;
 }
