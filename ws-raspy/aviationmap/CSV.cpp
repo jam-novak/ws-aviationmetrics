@@ -9,7 +9,7 @@ CSV::CSV(CSV &other) : QObject{parent()} {
 }
 
 CSV& CSV::operator=(const CSV& other){
-    delete[] this;
+    //delete[] this;
 
     this->latitude = other.latitude;
     this->longitude = other.longitude;
@@ -25,16 +25,32 @@ CSV& CSV::operator=(const CSV& other){
     return *this;
 }
 
+/*
 void CSV::create(QByteArray *data){
-    QFile file(":/flightparameters.csv");
+    QString path(":/flightparameters.csv");
+    QDir dir; // Initialize to the desired dir if 'path' is relative; by default the program's working directory "." is used.
+
+    // We create the directory if needed
+    if (!dir.exists(path))
+        dir.mkpath(path); // You can check the success if needed
+
+    QDateTime date = QDateTime::currentDateTimeUtc();
+    //QString filename = QDateTime::toString();
+
+
+    QFile file(path + "NewFile.kml");
     file.open(QIODevice::ReadWrite);
+
+
 
     //write serial data
 
 
-}
 
-void CSV::getCoordinate(){
+}
+*/
+
+void CSV::getData(){
     QFile file(":/flightparameters.csv");
         if (!file.open(QIODevice::ReadOnly)) {
             qDebug() << file.errorString();

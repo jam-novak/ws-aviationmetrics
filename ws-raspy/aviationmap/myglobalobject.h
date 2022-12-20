@@ -33,13 +33,13 @@ class MyGlobalObject : public QObject
     void readyForTakeoff();
     void reviewFlight();
     //getter
-    void latitudesignal();
-    void longitudesignal();
-    void airspeedsignal();
-    void steigratesignal();
-    void rollsignal();
-    void altitudesignal();
-    void pressuresignal();
+    qreal latitudesignal();
+    qreal longitudesignal();
+    double airspeedsignal();
+    double steigratesignal();
+    double rollsignal();
+    double altitudesignal();
+    double pressuresignal();
 
 };
 

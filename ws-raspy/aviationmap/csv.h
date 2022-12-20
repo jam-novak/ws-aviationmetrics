@@ -6,6 +6,8 @@
 #include <QFile>
 #include <QDebug>
 #include <QObject>
+#include <QDir>
+#include <QDateTime>
 
 class CSV: public QObject
 {
@@ -29,7 +31,11 @@ class CSV: public QObject
         CSV(QObject *parent = nullptr); //constructor
         CSV(CSV &other);                //copy constructor
         CSV& operator=(const CSV& csv); //assignment operator (overloaded operator)
-        void getCoordinate();
+        void getData();
+
+
+    public slots:
+        //void create(QByteArray *data);
         qreal getLatitude();
         qreal getLongitude();
         double getAirspeed();
@@ -37,9 +43,6 @@ class CSV: public QObject
         double getRoll();
         double getAltitude();
         double getPressure();
-
-    public slots:
-        void create(QByteArray *data);
 
 
 };

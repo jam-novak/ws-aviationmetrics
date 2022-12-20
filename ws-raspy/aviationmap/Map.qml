@@ -51,11 +51,6 @@ Window{
                    { latitude: 47.83, longitude: 13.12 } */
             ]
         }
-        //redundant
-        Route{
-            id: myroute
-            path: mapPolyline.path
-        }
 
 
         //time
@@ -81,49 +76,49 @@ Window{
                 }
 
                 Airspeed {
-                    /* Layout.row: 0
-                    Layout.column: 0*/
+                    //Layout.row: 0
+                    //Layout.column: 0
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     id: speedometer
                     radius: 0.1 * Math.min(parent.width, parent.height)
-                    airspeed: myGlobalObject.getAirspeed()
+                    //airspeed: myGlobalObject.getAirspeed()
                 }
 
                 ArtificialHorizon{
-                    /* Layout.row: 0
-                    Layout.column: 1*/
+                    //Layout.row: 0
+                    //Layout.column: 1
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     id: khorizonz
                     radius: 0.1 * Math.min(parent.width, parent.height)
-                    roll: myGlobalObject.getRoll()
-                    pitch: myGlobalObject.getSteigrate()
+                    //roll: myGlobalObject.getRoll()
+                    //pitch: myGlobalObject.getSteigrate()
                 }
 
                 Altimeter {
-                    /*Layout.row: 0
-                    Layout.column: 2*/
+                    //Layout.row: 0
+                    //Layout.column: 2
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     id: heightindicator
                     radius: 0.1 * Math.min(parent.width, parent.height)
-                    altitude: myGlobalObject.getAltitude()
-                    pressure: myGlobalObject.getPressure()
+                    //altitude: myGlobalObject.getAltitude()
+                    //pressure: myGlobalObject.getPressure()
                 }
 
                 Vario {
-                    /*Layout.row: 0
-                    Layout.column: 3*/
+                    //Layout.row: 0
+                    //Layout.column: 3
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     id: wario
-                    radius: 0.1 * Math.min(parent.width, parent.height)
-                    climbRate: myGlobalObject.getAltitude()
+                    //radius: 0.1 * Math.min(parent.width, parent.height)
+                    //climbRate: myGlobalObject.getAltitude()
                 }
             }
         }
-
+/*
         //menubar
         Item{
             MenuBar{
@@ -139,6 +134,9 @@ Window{
 
                     MenuItem{
                         text: qsTr("show vario")
+                        checkable: true
+                        checked: true
+                        onToggled: wario.visible = true
                     }
 
                 }
@@ -156,11 +154,11 @@ Window{
         Rectangle{
 
         }
-
+*/
         //1 min
         Timer {
             id: timer
-            interval: 1000      //ms
+            interval: 10000      //ms
             repeat: true
             running: true
 
@@ -171,7 +169,7 @@ Window{
                 //mapPolyline.addCoordinate(QtPositioning.coordinate(47.84, 13.12))
                 //myGlobalObject.test("TEXT") // NOTE: myGlobalObject is available here because it is set as a context property in main.cpp
 
-
+                /*
 
                 mapPolyline.addCoordinate((QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude())))
                 mapid.center = (QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude()))
@@ -185,6 +183,7 @@ Window{
                 heightindicator.pressure = myGlobalObject.getPressure()
 
                 wario.climbRate = myGlobalObject.getAltitude()
+                */
             }
         }
     }

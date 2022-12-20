@@ -18,6 +18,9 @@ SerialJames::SerialJames(QSerialPort *port, QObject *parent) : QObject(parent), 
     connect(serialPort, &QSerialPort::readyRead, this, &SerialJames::handleReadyRead);
 }
 
+SerialJames::~SerialJames(){
+   this->serialPort->close();
+}
 
 void SerialJames::handleReadyRead() {
     this->dataBuffer = this->serialPort->readAll();

@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui serialport
 QT       += location positioning
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets quickwidgets

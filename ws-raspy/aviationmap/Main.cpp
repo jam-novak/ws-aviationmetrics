@@ -1,5 +1,5 @@
 #include "main.h"
-
+#include <QSerialPortInfo>
 
 int main(int argc, char *argv[])
 {
@@ -7,6 +7,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QQmlApplicationEngine engine;
     SerialJames serialJames;
+
+    csv.getData();
 
 
     //map
@@ -59,21 +61,42 @@ int main(int argc, char *argv[])
 
     //setup signal slots
     //menu mode
+
     QObject::connect(myGlobal, &MyGlobalObject::readyForTakeoff,
                      &a,
                      [&engine, &url, &serialJames](){
         engine.load(url);
         //qDebug() << "signal empfangen";
-        //serialJames.openPort("/dev/tty50");
+
+        QList ports = QSerialPortInfo::availablePorts();
+        for (auto& port : ports) {
+
+            qDebug() << "port: " << port.portName();
+
+            if (port.portName() == "/dev/tty50") {
+                if (serialJames.openPort(port)){
+                   qDebug() << "Opened port " << port.portName();
+                }
+            }
+        }
 
     }); //lambda function = gleich hier ausgetipselt
 
     //serial data to csv
-    QObject::connect(&serialJames, &SerialJames::readerDataReady, &csv, &CSV::create);
+    //QObject::connect(&serialJames, &SerialJames::readerDataReady, &csv, &CSV::create);
+
+    //csv data
+    QObject::connect(myGlobal, &MyGlobalObject::latitudesignal, &csv, &CSV::getLatitude);
+    QObject::connect(myGlobal, &MyGlobalObject::longitudesignal, &csv, &CSV::getLongitude);
+    QObject::connect(myGlobal, &MyGlobalObject::airspeedsignal, &csv, &CSV::getAirspeed);
+    QObject::connect(myGlobal, &MyGlobalObject::altitudesignal, &csv, &CSV::getAltitude);
+    QObject::connect(myGlobal, &MyGlobalObject::pressuresignal, &csv, &CSV::getPressure);
+    QObject::connect(myGlobal, &MyGlobalObject::rollsignal, &csv, &CSV::getRoll);
+    QObject::connect(myGlobal, &MyGlobalObject::steigratesignal, &csv, &CSV::getSteigrate);
 
     //engine.load(url);
     //engine.load(url1);
-    engine.load(url2);
+    engine.load(url);
     return a.exec();
 
 }
