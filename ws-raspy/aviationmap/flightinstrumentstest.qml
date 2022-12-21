@@ -10,7 +10,7 @@ Window {
     visibility: Window.Maximized
     title: "Basic Six Example"
     color: "#ffffff"
-
+/*
     GridLayout {
         columns: 3
 
@@ -61,4 +61,5 @@ Window {
             }
         }
     }
+    */
 }

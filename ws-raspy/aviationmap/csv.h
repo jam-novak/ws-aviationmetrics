@@ -25,7 +25,7 @@ class CSV: public QObject
 
         QStringList data;
         QVector<QVector<QString>> vectorOfVectorsOfStrings;
-        int counter;
+        int counter = 0;
 
     public:
         CSV(QObject *parent = nullptr); //constructor

@@ -4,9 +4,11 @@ CSV::CSV(QObject *parent) : QObject{parent}{
 
 }
 
+/*
 CSV::CSV(CSV &other) : QObject{parent()} {
 
 }
+*/
 
 CSV& CSV::operator=(const CSV& other){
     //delete[] this;
@@ -35,7 +37,7 @@ void CSV::create(QByteArray *data){
         dir.mkpath(path); // You can check the success if needed
 
     QDateTime date = QDateTime::currentDateTimeUtc();
-    //QString filename = QDateTime::toString();
+    QString filename = date.toString();
 
 
     QFile file(path + "NewFile.kml");
@@ -61,7 +63,7 @@ void CSV::getData(){
             QByteArray line = file.readLine();
             QString str = line;
             data = str.split(',');
-            //qDebug() <<s coordinates;
+            //qDebug() << data;
 
 
             QVector<QString> foo; //create a QVector of QStrings
@@ -77,8 +79,8 @@ void CSV::getData(){
 
         }
 
-
-   /*   for(int i = 0; i < vectorOfVectorsOfStrings.size(); i++)
+      /*
+      for(int i = 0; i < vectorOfVectorsOfStrings.size(); i++)
         {
             for(int j = 0; j < vectorOfVectorsOfStrings[i].size(); j++)
             {
@@ -90,8 +92,14 @@ void CSV::getData(){
 }
 
 qreal CSV::getLatitude(){
+    if(counter <= (vectorOfVectorsOfStrings[counter][0]).size()){
     this->latitude = (vectorOfVectorsOfStrings[counter][0]).toDouble();
     counter++;
+    //qDebug() << latitude;
+
+    }else{
+        counter = 0;
+    }
 
     return latitude;
 }

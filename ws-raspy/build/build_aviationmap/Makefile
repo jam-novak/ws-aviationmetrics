@@ -271,6 +271,7 @@ DIST          = /home/Qt/5.15.2/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/qt_config.prf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/spec_post.prf \
+		../../aviationmap/.qmake.stash \
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/toolchain.prf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/default_pre.prf \
@@ -507,6 +508,7 @@ Makefile: ../../aviationmap/aviationmap.pro /home/Qt/5.15.2/gcc_64/mkspecs/linux
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/qt_config.prf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/toolchain.prf \
 		/home/Qt/5.15.2/gcc_64/mkspecs/features/default_pre.prf \
@@ -720,6 +722,7 @@ Makefile: ../../aviationmap/aviationmap.pro /home/Qt/5.15.2/gcc_64/mkspecs/linux
 /home/Qt/5.15.2/gcc_64/mkspecs/features/qt_config.prf:
 /home/Qt/5.15.2/gcc_64/mkspecs/linux-g++/qmake.conf:
 /home/Qt/5.15.2/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /home/Qt/5.15.2/gcc_64/mkspecs/features/exclusive_builds.prf:
 /home/Qt/5.15.2/gcc_64/mkspecs/features/toolchain.prf:
 /home/Qt/5.15.2/gcc_64/mkspecs/features/default_pre.prf:
@@ -1484,8 +1487,7 @@ CSV.o: ../../aviationmap/CSV.cpp ../../aviationmap/csv.h \
 Funk.o: ../../aviationmap/Funk.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Funk.o ../../aviationmap/Funk.cpp
 
-Main.o: ../../aviationmap/Main.cpp ../../aviationmap/main.h \
-		../../aviationmap/csv.h \
+Main.o: ../../aviationmap/Main.cpp ../../aviationmap/csv.h \
 		/home/Qt/5.15.2/gcc_64/include/QtCore/QString \
 		/home/Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
 		/home/Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
@@ -1573,7 +1575,6 @@ Main.o: ../../aviationmap/Main.cpp ../../aviationmap/main.h \
 		/home/Qt/5.15.2/gcc_64/include/QtSerialPort/QSerialPort \
 		/home/Qt/5.15.2/gcc_64/include/QtSerialPort/qserialport.h \
 		/home/Qt/5.15.2/gcc_64/include/QtSerialPort/qserialportglobal.h \
-		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qapplication.h \
 		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qtguiglobal.h \
@@ -1616,6 +1617,8 @@ Main.o: ../../aviationmap/Main.cpp ../../aviationmap/main.h \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qtouchdevice.h \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qguiapplication.h \
 		/home/Qt/5.15.2/gcc_64/include/QtGui/qinputmethod.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QtGlobal \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QApplication \
 		/home/Qt/5.15.2/gcc_64/include/QtQml/QQmlApplicationEngine \
 		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlapplicationengine.h \
 		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlengine.h \

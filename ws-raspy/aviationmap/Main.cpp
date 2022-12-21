@@ -1,5 +1,59 @@
-#include "main.h"
+#include "csv.h"
+#include "myglobalobject.h"
+#include "Animation.h"
+#include "primaryFlightData.h"
+#include "serialJames.h"
+#include <qapplication.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <QtGlobal>
+#include <QApplication>
+#include <QQmlApplicationEngine>
+#include <QCoreApplication>
+#include <QQmlContext>
 #include <QSerialPortInfo>
+#include <QTextStream>
+
+static const QtMessageHandler QT_DEFAULT_MESSAGE_HANDLER = qInstallMessageHandler(0);
+
+
+void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    QByteArray localMsg = msg.toLocal8Bit();
+    const char *file = context.file ? context.file : "";
+    const char *function = context.function ? context.function : "";
+    QFile errorfile("/home/jam/Documents/ws-aviationmetrics/ws-raspy/errorlog/errorlog.txt");
+    QTextStream stream(&errorfile);
+
+
+    if(errorfile.open(QIODevice::WriteOnly | QIODevice::Text)){
+    stream << QDateTime::currentDateTimeUtc().toString() << "\n";
+
+    switch (type) {
+    case QtDebugMsg:
+        stream << "Debug:" << localMsg.constData() << file << context.line << function;
+        break;
+    case QtInfoMsg:
+        stream << "Info: " << localMsg.constData() << file << context.line << function;
+        break;
+    case QtWarningMsg:
+        stream << "Warning: " << localMsg.constData() << file << context.line << function;
+        break;
+    case QtCriticalMsg:
+        stream << "Critical: " << localMsg.constData() << file << context.line << function;
+        break;
+    case QtFatalMsg:
+        stream << "Fatal: " << localMsg.constData() << file << context.line << function;
+        break;
+    }
+    stream << "\n";
+
+    (*QT_DEFAULT_MESSAGE_HANDLER)(type, context, msg);
+
+    }else{
+        qDebug() << "file not open";
+    }
+}
 
 int main(int argc, char *argv[])
 {
@@ -7,21 +61,23 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QQmlApplicationEngine engine;
     SerialJames serialJames;
-
     csv.getData();
+
+    qInstallMessageHandler(myMessageOutput);
 
 
     //map
     QUrl url(QStringLiteral("qrc:/Map.qml"));
     //engine.load(QUrl(QStringLiteral("qrc:/map.qml")));
     QObject::connect(
-                &engine,
-                &QQmlApplicationEngine::objectCreated,
-                &a,
-                [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
+        &engine,
+        &QQmlApplicationEngine::objectCreated,
+        &a,
+        [url](QObject *obj, const QUrl &objUrl) {
+            if (!obj && url == objUrl)
+                QCoreApplication::exit(-1);
+        },
+    Qt::QueuedConnection);
 
     //test
     QUrl url1(QStringLiteral("qrc:/flightinstrumentstest.qml"));

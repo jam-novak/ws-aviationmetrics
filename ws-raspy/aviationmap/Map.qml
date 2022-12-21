@@ -9,7 +9,7 @@ import QtQuick.Layouts 1.3
 Window{
     minimumWidth: 640
     minimumHeight: 480
-    visibility: Window.Maximized
+    //visibility: Window.Maximized
     visible: true
 
 
@@ -48,7 +48,7 @@ Window{
                 { latitude: 47.80, longitude: 13.12 },
                 { latitude: 47.81, longitude: 13.12 },
                 /* { latitude: 47.82, longitude: 13.12 },
-                   { latitude: 47.83, longitude: 13.12 } */
+                   { latitude: 47.83, longitude: 13.12 }*/
             ]
         }
 
@@ -63,62 +63,77 @@ Window{
 
         //instruments
         Item {
+            id: itemid
             anchors.fill: parent
-            width: 100
-            height: 100
 
-            GridLayout {
-                columns: 4
 
-                anchors {
-                    fill: parent
-                    margins: 16
+            Rectangle{
+                height: 150
+                width: 150
+                x: 450
+                y: 10
+
+                Text{
+                    id:textid
+                    text: "latitude: " + myGlobalObject.getLatitude() + " °" +
+                    "\nlongitude: " + myGlobalObject.getLongitude() + " °" +
+                    "\nspeed: " + myGlobalObject.getAirspeed() + " km/h" +
+                    "\nsteigrate: " + myGlobalObject.getSteigrate() + " °" +
+                    "\nroll: " + myGlobalObject.getRoll() + " °" +
+                    "\naltitude: " + myGlobalObject.getAltitude() + " m" +
+                    "\npressure: " + myGlobalObject.getPressure() + " Pa"
+                    font.family: "Arial"
+                    x: 10
+                    y: 10
                 }
 
+            }
                 Airspeed {
-                    //Layout.row: 0
-                    //Layout.column: 0
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     id: speedometer
-                    radius: 0.1 * Math.min(parent.width, parent.height)
-                    //airspeed: myGlobalObject.getAirspeed()
+                    radius: 0.2 * Math.min(parent.width, parent.height)
+                    airspeed: myGlobalObject.getAirspeed()
+                    x: 10
+                    y: 340
+
                 }
 
                 ArtificialHorizon{
-                    //Layout.row: 0
-                    //Layout.column: 1
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     id: khorizonz
-                    radius: 0.1 * Math.min(parent.width, parent.height)
-                    //roll: myGlobalObject.getRoll()
-                    //pitch: myGlobalObject.getSteigrate()
+                    radius: 0.2 * Math.min(parent.width, parent.height)
+                    roll: myGlobalObject.getRoll()
+                    pitch: myGlobalObject.getSteigrate()
+                    x: 160
+                    y: 340
                 }
 
                 Altimeter {
-                    //Layout.row: 0
-                    //Layout.column: 2
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     id: heightindicator
-                    radius: 0.1 * Math.min(parent.width, parent.height)
-                    //altitude: myGlobalObject.getAltitude()
-                    //pressure: myGlobalObject.getPressure()
+                    radius: 0.2 * Math.min(parent.width, parent.height)
+                    altitude: myGlobalObject.getAltitude()
+                    pressure: myGlobalObject.getPressure()
+                    x: 310
+                    y: 340
                 }
 
                 Vario {
-                    //Layout.row: 0
-                    //Layout.column: 3
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     id: wario
-                    //radius: 0.1 * Math.min(parent.width, parent.height)
-                    //climbRate: myGlobalObject.getAltitude()
+                    radius: 0.2 * Math.min(parent.width, parent.height)
+                    climbRate: myGlobalObject.getAltitude()
+                    x: 460
+                    y: 340
                 }
-            }
+
         }
-/*
+
+        /*
         //menubar
         Item{
             MenuBar{
@@ -154,11 +169,13 @@ Window{
         Rectangle{
 
         }
-*/
+        */
         //1 min
+
+
         Timer {
             id: timer
-            interval: 10000      //ms
+            interval: 1000      //ms
             repeat: true
             running: true
 
@@ -167,13 +184,13 @@ Window{
             {
                 timeText.text =  Qt.formatTime(new Date(),"hh:mm")
                 //mapPolyline.addCoordinate(QtPositioning.coordinate(47.84, 13.12))
-                //myGlobalObject.test("TEXT") // NOTE: myGlobalObject is available here because it is set as a context property in main.cpp
+                myGlobalObject.test("TEXT") // NOTE: myGlobalObject is available here because it is set as a context property in main.cpp
 
-                /*
+
 
                 mapPolyline.addCoordinate((QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude())))
                 mapid.center = (QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude()))
-
+/*
                 speedometer.airspeed = myGlobalObject.getAirspeed()
 
                 khorizonz.roll = myGlobalObject.getRoll()
@@ -186,6 +203,7 @@ Window{
                 */
             }
         }
+
     }
 }
 
