@@ -25,8 +25,6 @@ Window{
                     myGlobalObject.viewFlight()
                     windowmenu.visible = false
                 }
-
-
             }
 
             Button{
@@ -39,6 +37,5 @@ Window{
                 }
             }
         }
-
     }
 }

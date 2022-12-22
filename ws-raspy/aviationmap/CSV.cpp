@@ -20,16 +20,16 @@ CSV& CSV::operator=(const CSV& other){
     this->roll = other.roll;
     this->altitude = other.altitude;
     this->pressure = other.pressure;
-    this->data = other.data;
+    this->datastring = other.datastring;
     this->vectorOfVectorsOfStrings = other.vectorOfVectorsOfStrings;
     this->counter = other.counter;
 
     return *this;
 }
 
-/*
-void CSV::create(QByteArray *data){
-    QString path(":/flightparameters.csv");
+
+void CSV::create(){
+    path = ("/home/jam/Documents/ws-aviationmetrics/ws-raspy/csvdata/");
     QDir dir; // Initialize to the desired dir if 'path' is relative; by default the program's working directory "." is used.
 
     // We create the directory if needed
@@ -37,22 +37,43 @@ void CSV::create(QByteArray *data){
         dir.mkpath(path); // You can check the success if needed
 
     QDateTime date = QDateTime::currentDateTimeUtc();
-    QString filename = date.toString();
+    filename = date.toString();
 
-
-    QFile file(path + "NewFile.kml");
+    QFile file(path + filename + ".csv");
     file.open(QIODevice::ReadWrite);
 
+}
+
+void CSV::writeData(QByteArray *data){
+    //write to text file
+    QFile file(path + filename + ".csv");
+    if (!file.open(QIODevice::ReadWrite)) {
+        qDebug() << file.errorString();
+
+    }
+
+    QTextStream stream(&file);
+    stream << data << "\n";
+
+    //write to vectorofvectorofstrings
+    QString str = QString(*data);
+    datastring = str.split(',');
+    //qDebug() << data;
 
 
-    //write serial data
-
-
+    QVector<QString> foo; //create a QVector of QStrings
+    foo.push_back(data[0]);     //latitude
+    foo.push_back(data[1]);     //longitude
+    foo.push_back(data[2]);     //speed
+    foo.push_back(data[3]);     //steigrate
+    foo.push_back(data[4]);     //roll
+    foo.push_back(data[5]);     //altitude
+    foo.push_back(data[6]);     //pressure
+    vectorOfVectorsOfStrings.push_back(foo);
 
 }
-*/
 
-void CSV::getData(){
+void CSV::getDataFromCSV(){
     QFile file(":/flightparameters.csv");
         if (!file.open(QIODevice::ReadOnly)) {
             qDebug() << file.errorString();
@@ -62,18 +83,18 @@ void CSV::getData(){
         while (!file.atEnd()) {
             QByteArray line = file.readLine();
             QString str = line;
-            data = str.split(',');
+            datastring = str.split(',');
             //qDebug() << data;
 
 
             QVector<QString> foo; //create a QVector of QStrings
-            foo.push_back(data[0]);     //latitude
-            foo.push_back(data[1]);     //longitude
-            foo.push_back(data[2]);     //speed
-            foo.push_back(data[3]);     //steigrate
-            foo.push_back(data[4]);     //roll
-            foo.push_back(data[5]);     //altitude
-            foo.push_back(data[6]);     //pressure
+            foo.push_back(datastring[0]);     //latitude
+            foo.push_back(datastring[1]);     //longitude
+            foo.push_back(datastring[2]);     //speed
+            foo.push_back(datastring[3]);     //steigrate
+            foo.push_back(datastring[4]);     //roll
+            foo.push_back(datastring[5]);     //altitude
+            foo.push_back(datastring[6]);     //pressure
             vectorOfVectorsOfStrings.push_back(foo); //add the created vector as a line in your 2D vector
 
 

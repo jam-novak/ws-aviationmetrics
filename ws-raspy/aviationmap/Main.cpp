@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QQmlApplicationEngine engine;
     SerialJames serialJames;
-    csv.getData();
+    csv.getDataFromCSV();
 
     qInstallMessageHandler(myMessageOutput);
 
@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
     }); //lambda function = gleich hier ausgetipselt
 
     //serial data to csv
-    //QObject::connect(&serialJames, &SerialJames::readerDataReady, &csv, &CSV::create);
+    QObject::connect(&serialJames, &SerialJames::readerDataReady, &csv, &CSV::writeData);
 
     //csv data
     QObject::connect(myGlobal, &MyGlobalObject::latitudesignal, &csv, &CSV::getLatitude);

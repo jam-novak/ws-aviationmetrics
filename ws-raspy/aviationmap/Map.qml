@@ -7,9 +7,10 @@ import QtQuick.Layouts 1.3
 
 
 Window{
+    id: windowid
     minimumWidth: 640
     minimumHeight: 480
-    //visibility: Window.Maximized
+    visibility: Window.Maximized
     visible: true
 
 
@@ -68,10 +69,11 @@ Window{
 
 
             Rectangle{
+                id: rect
                 height: 150
                 width: 150
-                x: 450
-                y: 10
+                x: windowid.width - (rect.width + 10)
+                y: windowid.height - (windowid.height - 10)
 
                 Text{
                     id:textid
@@ -86,50 +88,49 @@ Window{
                     x: 10
                     y: 10
                 }
-
             }
-                Airspeed {
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    id: speedometer
-                    radius: 0.2 * Math.min(parent.width, parent.height)
-                    airspeed: myGlobalObject.getAirspeed()
-                    x: 10
-                    y: 340
 
-                }
+            Airspeed {
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                id: speedometer
+                radius: 0.2 * Math.min(parent.width, parent.height)
+                airspeed: myGlobalObject.getAirspeed()
+                x: 10
+                y: 340
+            }
 
-                ArtificialHorizon{
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    id: khorizonz
-                    radius: 0.2 * Math.min(parent.width, parent.height)
-                    roll: myGlobalObject.getRoll()
-                    pitch: myGlobalObject.getSteigrate()
-                    x: 160
-                    y: 340
-                }
+            ArtificialHorizon{
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                id: khorizonz
+                radius: 0.2 * Math.min(parent.width, parent.height)
+                roll: myGlobalObject.getRoll()
+                pitch: myGlobalObject.getSteigrate()
+                x: 160
+                y: 340
+            }
 
-                Altimeter {
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    id: heightindicator
-                    radius: 0.2 * Math.min(parent.width, parent.height)
-                    altitude: myGlobalObject.getAltitude()
-                    pressure: myGlobalObject.getPressure()
-                    x: 310
-                    y: 340
-                }
+            Altimeter {
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                id: heightindicator
+                radius: 0.2 * Math.min(parent.width, parent.height)
+                altitude: myGlobalObject.getAltitude()
+                pressure: myGlobalObject.getPressure()
+                x: 310
+                y: 340
+            }
 
-                Vario {
-                    Layout.fillHeight: true
-                    Layout.fillWidth: true
-                    id: wario
-                    radius: 0.2 * Math.min(parent.width, parent.height)
-                    climbRate: myGlobalObject.getAltitude()
-                    x: 460
-                    y: 340
-                }
+            Vario {
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                id: wario
+                radius: 0.2 * Math.min(parent.width, parent.height)
+                climbRate: myGlobalObject.getAltitude()
+                x: 460
+                y: 340
+            }
 
         }
 
@@ -184,13 +185,19 @@ Window{
             {
                 timeText.text =  Qt.formatTime(new Date(),"hh:mm")
                 //mapPolyline.addCoordinate(QtPositioning.coordinate(47.84, 13.12))
-                myGlobalObject.test("TEXT") // NOTE: myGlobalObject is available here because it is set as a context property in main.cpp
+                //myGlobalObject.test("TEXT") // NOTE: myGlobalObject is available here because it is set as a context property in main.cpp
 
-
+                textid.text = "latitude: " + myGlobalObject.getLatitude() + " °" +
+                              "\nlongitude: " + myGlobalObject.getLongitude() + " °" +
+                              "\nspeed: " + myGlobalObject.getAirspeed() + " km/h" +
+                              "\nsteigrate: " + myGlobalObject.getSteigrate() + " °" +
+                              "\nroll: " + myGlobalObject.getRoll() + " °" +
+                              "\naltitude: " + myGlobalObject.getAltitude() + " m" +
+                              "\npressure: " + myGlobalObject.getPressure() + " hPa"
 
                 mapPolyline.addCoordinate((QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude())))
                 mapid.center = (QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude()))
-/*
+
                 speedometer.airspeed = myGlobalObject.getAirspeed()
 
                 khorizonz.roll = myGlobalObject.getRoll()
@@ -200,10 +207,7 @@ Window{
                 heightindicator.pressure = myGlobalObject.getPressure()
 
                 wario.climbRate = myGlobalObject.getAltitude()
-                */
             }
         }
-
     }
 }
-

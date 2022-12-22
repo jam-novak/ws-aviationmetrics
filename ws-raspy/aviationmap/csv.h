@@ -15,6 +15,9 @@ class CSV: public QObject
     Q_OBJECT
 
     private:
+        QString path = "";
+        QString filename = "";
+
         qreal latitude;
         qreal longitude;
         double airspeed;
@@ -23,7 +26,7 @@ class CSV: public QObject
         double altitude;
         double pressure;
 
-        QStringList data;
+        QStringList datastring;
         QVector<QVector<QString>> vectorOfVectorsOfStrings;
         int counter = 0;
 
@@ -31,11 +34,12 @@ class CSV: public QObject
         CSV(QObject *parent = nullptr); //constructor
         CSV(CSV &other);                //copy constructor
         CSV& operator=(const CSV& csv); //assignment operator (overloaded operator)
-        void getData();
+        void getDataFromCSV();
 
 
     public slots:
-        //void create(QByteArray *data);
+        void create();
+        void writeData(QByteArray *data);
         qreal getLatitude();
         qreal getLongitude();
         double getAirspeed();
