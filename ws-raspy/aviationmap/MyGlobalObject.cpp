@@ -56,3 +56,7 @@ void MyGlobalObject::startFlight(){
 void MyGlobalObject::viewFlight(){
     emit reviewFlight();
 }
+
+void MyGlobalObject::done(){
+    emit counterup();
+}

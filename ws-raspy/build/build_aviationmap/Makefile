@@ -802,8 +802,11 @@ qrc_qml.cpp: ../../aviationmap/qml.qrc \
 		../../aviationmap/flightinstrumentstest.qml \
 		../../aviationmap/Altimeter.qml \
 		../../aviationmap/Rescources/Airspeed/asi_case.svg \
+		../../aviationmap/Rescources/Airspeed/asi_face_adobe_express.svg \
+		../../aviationmap/Rescources/Airspeed/asi_face.png \
 		../../aviationmap/Rescources/Airspeed/asi_hand.svg \
 		../../aviationmap/Rescources/Airspeed/asi_face.svg \
+		../../aviationmap/Rescources/Airspeed/ArtificialHorizon.qml \
 		../../aviationmap/Rescources/Airspeed/asi.svg \
 		../../aviationmap/Rescources/Menu/background.jpg \
 		../../aviationmap/Rescources/Altimeter/alt_face_1.svg \
@@ -811,13 +814,15 @@ qrc_qml.cpp: ../../aviationmap/qml.qrc \
 		../../aviationmap/Rescources/Altimeter/alt.svg \
 		../../aviationmap/Rescources/Altimeter/alt_case.svg \
 		../../aviationmap/Rescources/Altimeter/alt_face_3.svg \
+		../../aviationmap/Rescources/Altimeter/alt_face_2.png \
 		../../aviationmap/Rescources/Altimeter/alt_face_2.svg \
 		../../aviationmap/Rescources/Altimeter/alt_hand_2.svg \
+		../../aviationmap/Rescources/ArtificialHorizon/ai_face.png \
 		../../aviationmap/Rescources/ArtificialHorizon/ai_ring.svg \
-		../../aviationmap/Rescources/ArtificialHorizon/ai_face.svg \
 		../../aviationmap/Rescources/ArtificialHorizon/ai_case.svg \
 		../../aviationmap/Rescources/ArtificialHorizon/ai.svg \
 		../../aviationmap/Rescources/ArtificialHorizon/ai_back.svg \
+		../../aviationmap/Rescources/Vario/vsi_face.png \
 		../../aviationmap/Rescources/Vario/vsi.svg \
 		../../aviationmap/Rescources/Vario/vsi_hand.svg \
 		../../aviationmap/Rescources/Vario/vsi_face.svg \
@@ -1989,7 +1994,42 @@ mainwindow.o: ../../aviationmap/mainwindow.cpp ../../aviationmap/mainwindow.h \
 		/home/Qt/5.15.2/gcc_64/include/QtQml/QQmlContext \
 		/home/Qt/5.15.2/gcc_64/include/QtQml/qqmlcontext.h \
 		/home/Qt/5.15.2/gcc_64/include/QtCore/QObject \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QVariant \
+		/home/Qt/5.15.2/gcc_64/include/QtQuickWidgets/QQuickWidget \
+		/home/Qt/5.15.2/gcc_64/include/QtQuickWidgets/qquickwidget.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQuick/qquickwindow.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQuick/qtquickglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQuick/qtquick-config.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQuick/qsgrendererinterface.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQuick/qsgnode.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQuick/qsggeometry.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qopengl.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/qt_windows.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qopengles2ext.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qopenglext.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QRectF \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/QMatrix4x4 \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qmatrix4x4.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qvector3d.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qvector4d.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qquaternion.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qgenericmatrix.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qwindow.h \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QEvent \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QMargins \
+		/home/Qt/5.15.2/gcc_64/include/QtCore/QRect \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qsurface.h \
+		/home/Qt/5.15.2/gcc_64/include/QtGui/qsurfaceformat.h \
+		/home/Qt/5.15.2/gcc_64/include/QtQuickWidgets/qtquickwidgetsglobal.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QMenuBar \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qmenubar.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qmenu.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qaction.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QStatusBar \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/qstatusbar.h \
+		/home/Qt/5.15.2/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../../aviationmap/mainwindow.cpp
 
 qrc_qml.o: qrc_qml.cpp 

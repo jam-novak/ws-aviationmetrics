@@ -24,6 +24,8 @@ class MyGlobalObject : public QObject
     double getRoll();
     double getAltitude();
     double getPressure();
+    //setter
+    void done();
     //modes
     void startFlight();
     void viewFlight();
@@ -40,6 +42,7 @@ class MyGlobalObject : public QObject
     double rollsignal();
     double altitudesignal();
     double pressuresignal();
+    void counterup();
 
 };
 

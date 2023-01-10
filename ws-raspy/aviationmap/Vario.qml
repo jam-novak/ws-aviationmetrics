@@ -6,6 +6,10 @@ Item {
 
     required property double radius
     property double climbRate: 0
+    property double dumm: 90
+    property double angle: 270 + dumm
+
+    onClimbRateChanged: update()
 
     Image {
         anchors.fill: parent
@@ -16,7 +20,7 @@ Item {
         smooth: true
         antialiasing: true
         mipmap:true
-        source: "qrc:/Rescources/Vario/vsi_face.svg"
+        source: "qrc:/Rescources/Vario/vsi_face.png"
     }
 
     Image {
@@ -41,6 +45,21 @@ Item {
         antialiasing: true
         mipmap:true
         source: "qrc:/Rescources/Vario/vsi_hand.svg"
-        rotation: 8.6 * climbRate
+        rotation: angle
+    }
+
+    function update(){
+       if ( climbRate < -2.5 ){
+           angle = 180 - 36 * ( climbRate - 2.5 ) + dumm
+       }
+       else if ( climbRate < 0 ){
+           angle = 270 - 36 * climbRate + dumm
+       }
+       else if ( climbRate < 2.5 ){
+          angle = 270 + 36 * climbRate + dumm
+       }
+       else if( climbRate <= 5 ){
+           angle = 36 * ( climbRate - 2.5 ) + dumm
+       }
     }
 }

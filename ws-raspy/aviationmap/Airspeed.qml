@@ -6,21 +6,20 @@ Item {
 
     required property double radius
     property double airspeed: 0
-    property double angle: 0
+    property double angle: 37.0
 
     onAirspeedChanged: update();
 
     function update(){
-        angle = airspeed
 
-        if      (angle <   0.0) angle =   0.0
-        else if (angle > 235.0) angle = 235.0
+        if      (airspeed <=   0.0) angle = 37.0
+        //else if (airspeed > 185.0) angle = 185.0
 
-        if      (angle <  40.0) angle =          0.9 *  angle
-        else if (angle <  70.0) angle =   36.0 + 1.8 * (angle -  40.0)
-        else if (angle < 130.0) angle =   90.0 + 2.0 * (angle -  70.0)
-        else if (angle < 160.0) angle =  210.0 + 1.8 * (angle - 130.0)
-        else                    angle =  264.0 + 1.2 * (angle - 160.0)
+        if (airspeed <  30.0) angle =   37.0 + 1.76 * (airspeed - 0)
+        else if (airspeed < 75.0) angle =   90.0 + 2.0 * (airspeed -  30.0)
+        else if (airspeed < 90.0) angle =  181.0 + 1.8 * (airspeed - 75.0)
+        else if (airspeed < 125.0) angle = 212.0 + 1.6285 * (airspeed - 90)
+        else                    angle =  270.0 + 0.672 * (airspeed - 125.0)
 
     }
 
@@ -34,7 +33,7 @@ Item {
         antialiasing: true
         mipmap:true
 
-        source: "qrc:/Rescources/Airspeed/asi_face.svg"
+        source: "qrc:/Rescources/Airspeed/asi_face.png"
     }
 
     Image {

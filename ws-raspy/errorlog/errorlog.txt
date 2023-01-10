@@ -1,2 +1,2 @@
-Thu Dec 22 08:18:12 2022 GMT
+Tue Jan 10 16:25:38 2023 GMT
 Debug:test "TEXT FROM C++"../../aviationmap/MyGlobalObject.cpp11void MyGlobalObject::test(const QString&)

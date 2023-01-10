@@ -10,7 +10,7 @@ Window{
     id: windowid
     minimumWidth: 640
     minimumHeight: 480
-    visibility: Window.Maximized
+    //visibility: Window.Maximized
     visible: true
 
 
@@ -94,7 +94,7 @@ Window{
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 id: speedometer
-                radius: 0.2 * Math.min(parent.width, parent.height)
+                radius: 0.17 * Math.min(parent.width, parent.height)
                 airspeed: myGlobalObject.getAirspeed()
                 x: 10
                 y: 340
@@ -104,7 +104,7 @@ Window{
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 id: khorizonz
-                radius: 0.2 * Math.min(parent.width, parent.height)
+                radius: 0.17 * Math.min(parent.width, parent.height)
                 roll: myGlobalObject.getRoll()
                 pitch: myGlobalObject.getSteigrate()
                 x: 160
@@ -115,7 +115,7 @@ Window{
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 id: heightindicator
-                radius: 0.2 * Math.min(parent.width, parent.height)
+                radius: 0.17 * Math.min(parent.width, parent.height)
                 altitude: myGlobalObject.getAltitude()
                 pressure: myGlobalObject.getPressure()
                 x: 310
@@ -126,7 +126,7 @@ Window{
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 id: wario
-                radius: 0.2 * Math.min(parent.width, parent.height)
+                radius: 0.17 * Math.min(parent.width, parent.height)
                 climbRate: myGlobalObject.getAltitude()
                 x: 460
                 y: 340
@@ -171,7 +171,6 @@ Window{
 
         }
         */
-        //1 min
 
 
         Timer {
@@ -196,7 +195,7 @@ Window{
                               "\npressure: " + myGlobalObject.getPressure() + " hPa"
 
                 mapPolyline.addCoordinate((QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude())))
-                mapid.center = (QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude()))
+                //mapid.center = (QtPositioning.coordinate(myGlobalObject.getLatitude(), myGlobalObject.getLongitude()))
 
                 speedometer.airspeed = myGlobalObject.getAirspeed()
 
@@ -206,7 +205,8 @@ Window{
                 heightindicator.altitude = myGlobalObject.getAltitude()
                 heightindicator.pressure = myGlobalObject.getPressure()
 
-                wario.climbRate = myGlobalObject.getAltitude()
+                wario.climbRate = myGlobalObject.getSteigrate()
+                myGlobalObject.done()
             }
         }
     }

@@ -51,7 +51,7 @@ Item {
         antialiasing: true
         mipmap:true
 
-        source: "qrc:/Rescources/ArtificialHorizon/ai_face.svg"
+        source: "qrc:/Rescources/ArtificialHorizon/ai_face.png"
 
         transform: [
             Rotation {

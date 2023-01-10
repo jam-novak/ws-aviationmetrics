@@ -113,14 +113,9 @@ void CSV::getDataFromCSV(){
 }
 
 qreal CSV::getLatitude(){
-    if(counter <= (vectorOfVectorsOfStrings[counter][0]).size()){
     this->latitude = (vectorOfVectorsOfStrings[counter][0]).toDouble();
-    counter++;
-    //qDebug() << latitude;
 
-    }else{
-        counter = 0;
-    }
+    //qDebug() << latitude;
 
     return latitude;
 }
@@ -159,4 +154,12 @@ double CSV::getPressure(){
     this->pressure = (vectorOfVectorsOfStrings[counter][6]).toDouble();
 
     return pressure;
+}
+
+void CSV::setCounter(){
+    counter++;
+    if(counter > (vectorOfVectorsOfStrings[counter][0]).size()){
+        counter = 0;
+    }
+
 }

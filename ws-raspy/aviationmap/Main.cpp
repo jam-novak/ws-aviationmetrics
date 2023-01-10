@@ -149,6 +149,7 @@ int main(int argc, char *argv[])
     QObject::connect(myGlobal, &MyGlobalObject::pressuresignal, &csv, &CSV::getPressure);
     QObject::connect(myGlobal, &MyGlobalObject::rollsignal, &csv, &CSV::getRoll);
     QObject::connect(myGlobal, &MyGlobalObject::steigratesignal, &csv, &CSV::getSteigrate);
+    QObject::connect(myGlobal, &MyGlobalObject::counterup, &csv, &CSV::setCounter);
 
     //engine.load(url);
     //engine.load(url1);

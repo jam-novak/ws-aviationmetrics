@@ -19,7 +19,6 @@
         <file>Rescources/ArtificialHorizon/ai.svg</file>
         <file>Rescources/ArtificialHorizon/ai_back.svg</file>
         <file>Rescources/ArtificialHorizon/ai_case.svg</file>
-        <file>Rescources/ArtificialHorizon/ai_face.svg</file>
         <file>Rescources/ArtificialHorizon/ai_ring.svg</file>
         <file>Rescources/Vario/vsi.svg</file>
         <file>Rescources/Vario/vsi_case.svg</file>
@@ -30,5 +29,11 @@
         <file>Main.qml</file>
         <file>Menu.qml</file>
         <file>Rescources/Menu/background.jpg</file>
+        <file>Rescources/Airspeed/ArtificialHorizon.qml</file>
+        <file>Rescources/Airspeed/asi_face.png</file>
+        <file>Rescources/Airspeed/asi_face_adobe_express.svg</file>
+        <file>Rescources/Altimeter/alt_face_2.png</file>
+        <file>Rescources/ArtificialHorizon/ai_face.png</file>
+        <file>Rescources/Vario/vsi_face.png</file>
     </qresource>
 </RCC>

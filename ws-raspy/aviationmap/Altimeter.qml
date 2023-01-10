@@ -6,7 +6,7 @@ Item {
 
     required property double radius
     property double altitude: 0
-    property double pressure: 28
+    property double pressure: 0
 
     Image {
         anchors.fill: parent
@@ -62,8 +62,8 @@ Item {
         smooth: true
         antialiasing: true
         mipmap:true
-        source: "qrc:/Rescources/Altimeter/alt_hand_1.svg"
-        rotation: 0.036 * altitude
+        source: "qrc:/Rescources/Altimeter/alt_hand_1.svg"  //hunderterstelle
+        rotation: 3.6 * (altitude % 100 )
     }
 
     Image {
@@ -75,8 +75,8 @@ Item {
         smooth: true
         antialiasing: true
         mipmap:true
-        source: "qrc:/Rescources/Altimeter/alt_hand_2.svg"
-        rotation: 0.36 * (altitude % 1000)
+        source: "qrc:/Rescources/Altimeter/alt_hand_2.svg"  //meterstelle
+        rotation: 3.6 * altitude
     }
 
     Image {

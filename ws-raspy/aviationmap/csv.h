@@ -47,6 +47,7 @@ class CSV: public QObject
         double getRoll();
         double getAltitude();
         double getPressure();
+        void setCounter();
 
 
 };
